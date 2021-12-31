@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página web</title>
+    <link rel="stylesheet" href="{{url_for('static', filename = 'estilos.css')}}">
+    <link rel="stylesheet" media="all" href="{{url_for('static', filename = 'css/style.css')}}" />
+
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;700&display=swap" rel="stylesheet">
+    <link href='https://unpkg.com/boxicons@2.0.5/css/boxicons.min.css' rel='stylesheet'>
+</head>
+
+<body>
+
+    <header class="header" id="inicio">
+        <img class="hamburguer" src="{{url_for('static', filename = 'img/hamburguesa.svg')}}" alt="">
+        <nav class="menu-navegacion">
+            <a href="#inicio">Inicio</a>
+            <a href="#Carga">Cargar Archivo</a>
+            <a href="#analisis">análisis de información</a>
+            <a href="#expertos">Especializados</a>
+            <a href="#footer">Contacto</a>
+        </nav>
+        <div class="contenedor head">
+            <h1 class="titulo">Coronavirus Data Analysis</h1>
+            <p class="copy">Organizacion de lenguajes y compiladores 2</p>
+        </div>
+
+    </header>
+    <main>
+        <section class="services contenedor" id="Carga">
+            <h2 class="subtitulo">Cargar archivo</h2>
+            <div class="contenedor-servicio">
+                <img src="{{url_for('static', filename = 'img/security.svg')}}" alt="">
+                <div class="checklist-servicio">
+                    <center>
+                        <div class="service">
+                            <h3 class="n-service"><span class="number">1</span>Seleccione el archivo a cargar</h3>
+                            <form action="/uploader" method="POST" enctype="multipart/form-data">
+                                <br>
+                                <div class="file-select" id="src-file2">
+                                    <input type="file" name="archivo" aria-label="Archivo">
+                                </div>
+                                <br><br><b><br>
+                                    <div class="buttons">
+                                        <button class="pulse" type="submit">Cargar</button>
+                                    </div>
+                                    
+                            </form>
+                        </div>
+                    </center>
+                </div>
+            </div>
+        </section>
+
+        <section class="gallery" id="analisis">
+            <br><br><br>
+            <h2 class="subtitulo1">Análisis de información</h2>
+            <div class="contenedor-servicio">
+                <img src="{{url_for('static', filename = 'img/checklist.svg')}}" alt="">
+                <div class="checklist-servicio">
+                    <div class="service">
+                        <h3 class="n-service1"><span class="number">1</span>Tendencia de la infección por Covid-19 en un País</h3>
+                        <div class="buttons">
+                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;    
+                            <button class="raise" type="submit">Analizar</button>
+                        </div>
+                    </div>
+                    <div class="service">
+                        <h3 class="n-service1"><span class="number">2</span>Predicción de Infectados en un País</h3>
+                        <div class="buttons">
+                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;    
+                            <button class="raise" type="submit">Analizar</button>
+                        </div>
+                    </div>
+                    <div class="service">
+                        <h3 class="n-service1"><span class="number">3</span>Indice de Progresión de la pandemia</h3>
+                        <div class="buttons">
+                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;    
+                            <button class="raise" type="submit">Analizar</button>
+                        </div>
+                    </div>
+                    <div class="service">
+                        <h3 class="n-service1"><span class="number">4</span>Predicción de mortalidad por COVID en un Departamento</h3>
+                        <div class="buttons">
+                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;    
+                            <button class="raise" type="submit">Analizar</button>
+                        </div>
+                    </div>
+                    <div class="service">
+                        <h3 class="n-service1"><span class="number">5</span>Predicción de mortalidad por COVID en un País</h3>
+                        <div class="buttons">
+                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;    
+                            <button class="raise" type="submit">Analizar</button>
+                        </div>
+                    </div>
+                    <div class="service">
+                        <h3 class="n-service1"><span class="number">6</span>Análisis del número de muertes por coronavirus en un País</h3>
+                        <div class="buttons">
+                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;    
+                            <button class="raise" type="submit">Analizar</button>
+                        </div>
+                    </div>
+                    <div class="service">
+                        <h3 class="n-service1"><span class="number">7</span>Tendencia del número de infectados por día de un País</h3>
+                        <div class="buttons">
+                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;    
+                            <button class="raise" type="submit">Analizar</button>
+                        </div>
+                    </div>
+                    <div class="service">
+                        <h3 class="n-service1"><span class="number">8</span>Predicción de casos de un país para un año</h3>
+                        <div class="buttons">
+                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;    
+                            <button class="raise" type="submit">Analizar</button>
+                        </div>
+                    </div>
+                    <div class="service">
+                        <h3 class="n-service1"><span class="number">9</span>Tendencia de la vacunación de en un País</h3>
+                        <div class="buttons">
+                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;    
+                            <button class="raise" type="submit">Analizar</button>
+                        </div>
+                    </div>
+                    <div class="service">
+                        <h3 class="n-service1"><span class="number">10</span>Ánalisis Comparativo de Vacunaciópn entre 2 paises</h3>
+                        <div class="buttons">
+                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;    
+                            <button class="raise" type="submit">Analizar</button>
+                        </div>
+                    </div>
+                    <div class="service">
+                        <h3 class="n-service1"><span class="number">11</span>Porcentaje de hombres infectados por covid-19 en un País desde el primer caso activo</h3>
+                        <div class="buttons">
+                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;    
+                            <button class="raise" type="submit">Analizar</button>
+                        </div>
+                    </div>
+                    <div class="service">
+                        <h3 class="n-service1"><span class="number">12</span>Ánalisis Comparativo entres 2 o más paises o continentes</h3>
+                        <div class="buttons">
+                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;    
+                            <button class="raise" type="submit">Analizar</button>
+                        </div>
+                    </div>
+                    <div class="service">
+                        <h3 class="n-service1"><span class="number">13</span>Muertes promedio por casos confirmados y edad de covid 19 en un País</h3>
+                        <div class="buttons">
+                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;    
+                            <button class="raise" type="submit">Analizar</button>
+                        </div>
+                    </div>
+                    <div class="service">
+                        <h3 class="n-service1"><span class="number">14</span>Muertes según regiones de un país - Covid 19</h3>
+                        <div class="buttons">
+                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;    
+                            <button class="raise" type="submit">Analizar</button>
+                        </div>
+                    </div>
+                    <div class="service">
+                        <h3 class="n-service1"><span class="number">15</span>Tendencia de casos confirmados de Coronavirus en un departamento de un País</h3>
+                        <div class="buttons">
+                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;    
+                            <button class="raise" type="submit">Analizar</button>
+                        </div>
+                    </div>
+                    <div class="service">
+                        <h3 class="n-service1"><span class="number">16</span>Porcentaje de muertes frente al total de casos en un país, región o continente</h3>
+                        <div class="buttons">
+                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;    
+                            <button class="raise" type="submit">Analizar</button>
+                        </div>
+                    </div>
+                    <div class="service">
+                        <h3 class="n-service1"><span class="number">17</span>Tasa de comportamiento de casos activos en relación al número de muertes en un continente</h3>
+                        <div class="buttons">
+                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;    
+                            <button class="raise" type="submit">Analizar</button>
+                        </div>
+                    </div>
+                    <div class="service">
+                        <h3 class="n-service1"><span class="number">18</span>Comportamiento y clasificación de personas infectadas por COVID-19 por municipio en un País</h3>
+                        <div class="buttons">
+                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;    
+                            <button class="raise" type="submit">Analizar</button>
+                        </div>
+                    </div>
+                    <div class="service">
+                        <h3 class="n-service1"><span class="number">19</span>Predicción de muertes en el último día del primer año de infecciones en un país</h3>
+                        <div class="buttons">
+                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;    
+                            <button class="raise" type="submit">Analizar</button>
+                        </div>
+                    </div>
+                    <div class="service">
+                        <h3 class="n-service1"><span class="number">20</span>Tasa de crecimiento de casos de COVID-19 en relación con nuevos casos diarios y tasa de muerte por COVID-19</h3>
+                        <div class="buttons">
+                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;    
+                            <button class="raise" type="submit">Analizar</button>
+                        </div>
+                    </div>
+                    <div class="service">
+                        <h3 class="n-service1"><span class="number">21</span>Predicciones de casos y muertes en todo el mundo - Neural Network MLPRegressor</h3>
+                        <div class="buttons">
+                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;    
+                            <button class="raise" type="submit">Analizar</button>
+                        </div>
+                    </div>
+                    <div class="service">
+                        <h3 class="n-service1"><span class="number">22</span>Tasa de mortalidad por coronavirus (COVID-19) en un país</h3>
+                        <div class="buttons">
+                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;    
+                            <button class="raise" type="submit">Analizar</button>
+                        </div>
+                    </div>
+                    <div class="service">
+                        <h3 class="n-service1"><span class="number">23</span>Factores de muerte por COVID-19 en un país</h3>
+                        <div class="buttons">
+                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;    
+                            <button class="raise" type="submit">Analizar</button>
+                        </div>
+                    </div>
+                    <div class="service">
+                        <h3 class="n-service1"><span class="number">24</span>Comparación entre el número de casos detectados y el número de pruebas de un país</h3>
+                        <div class="buttons">
+                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;    
+                            <button class="raise" type="submit">Analizar</button>
+                        </div>
+                    </div>
+                    <div class="service">
+                        <h3 class="n-service1"><span class="number">25</span>Predicción de casos confirmados por día</h3>
+                        <div class="buttons">
+                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;    
+                            <button class="raise" type="submit">Analizar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="gallery1" id="galeria">
+            <div class="contenedor">
+                <h2 class="subtitulo">Galeria</h2>
+                <div class="contenedor-galeria">
+                    <img src="{{url_for('static', filename = 'img/uno.jpg')}}" class="img-galeria" alt="Hola">
+                    <img src="{{url_for('static', filename = 'img/dos.jpg')}}" class="img-galeria" alt="">
+                    <img src="{{url_for('static', filename = 'img/tres.jpg')}}" class="img-galeria" alt="">
+                    <img src="{{url_for('static', filename = 'img/cuatro.jpg')}}" class="img-galeria" alt="">
+                    <img src="{{url_for('static', filename = 'img/cinco.jpg')}}" class="img-galeria" alt="">
+                    <img src="{{url_for('static', filename = 'img/seis.jpg')}}" class="img-galeria" alt="">
+                </div>
+            </div>
+        </section>
+        <div class="imagen-light">
+            <img src="{{url_for('static', filename = 'img/close.svg')}}" alt="" class="close">
+            <img src="" alt="" class="agregar-imagen">
+        </div>
+        <section class="contenedor" id="expertos">
+            <h2 class="subtitulo">Expertos en:</h2>
+            <section class="experts">
+                <div class="cont-expert">
+                    <img src="{{url_for('static', filename = 'img/pie_chart.svg')}}" alt="">
+                    <h3 class="n-expert">Analytics</h3>
+                </div>
+                <div class="cont-expert">
+                    <img src="{{url_for('static', filename = 'img/search_engine.svg')}}" alt="">
+                    <h3 class="n-expert">SEO</h3>
+                </div>
+                <div class="cont-expert">
+                    <img src="{{url_for('static', filename = 'img/security.svg')}}" alt="">
+                    <h3 class="n-expert">Security</h3>
+                </div>
+            </section>
+        </section>
+    </main>
+
+    <footer id="footer">
+        <div class="contenedor footer-content">
+            <div class="contact-us">
+                <h2 class="brand">AlexCG Design</h2>
+                <p>Somos expertos en la creación de tus sueños</p>
+            </div>
+        </div>
+        <div class="line"></div>
+    </footer>
+    <script src="{{url_for('static', filename = 'js/menu.js')}}"></script>
+    <script src="{{url_for('static', filename = 'js/lightbox.js')}}"></script>
+</body>
+
+</html>
