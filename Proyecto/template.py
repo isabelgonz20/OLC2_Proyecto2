@@ -18,8 +18,19 @@ app. config['UPLOAD_FOLDER'] = "./Archivos"
 def index():
     return render_template('index.html')
 
+#@app.route('/opcionesrep2')
+#def inirep2():
+#    return render_template('iniciorep2.html')
 
-@app.route("/uploader", methods = ['POST'])
+@app.route('/iniciorep2')
+def pagina2():
+    return render_template('iniciorep2.html')
+
+@app.route('/iniciorep2/regresionlineal')
+def pagina3():
+    return render_template('prediccion_lineal.html')
+
+@app.route("/", methods = ['POST'])
 def uploader():
     if request.method == "POST":
         f = request.files['archivo']
@@ -33,6 +44,7 @@ def uploader():
 
 def Refresionlineal_prediccion(filename):
     df = pd.read_csv("Archivos/" + filename)
+
     print(df)
     x = np.asanyarray(df['Anio']).reshape(-1,1)
     y = df['Republica']
