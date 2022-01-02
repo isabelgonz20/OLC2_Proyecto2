@@ -2,69 +2,104 @@
 <html lang="es">
 
 <head>
-    <title>Reporte 1</title>
-    <meta charset="utf-8">
-
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-        crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-        crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js"
-        integrity="sha384-a5N7Y/aK3qNeh15eJKGWxsqtnX/wWdSZSKp+81YjTmS15nvnvxKHuzaWwXHDli+4"
-        crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Convertir HTML a PDF</title>
+    <!-- El script de la librería-->
+    <script src="{{url_for('static', filename = 'html2pdf.bundle.min.js')}}"></script>
+    <!--Nuestro script, que se encarga de crear el PDF usando la librería-->
+    <script src="{{url_for('static', filename = 'script.js')}}"></script>
+    <!-- Algunos estilos -->
+    <link rel="stylesheet" href="{{url_for('static', filename = 'style1.css')}}">
 </head>
 
 <body>
-    <div id="print">
+    <center>
+        <h1>Universidad de San Carlos</h1>
+        <h2>Facultad de Ingenieria</h2>
+        <h2>Organizacion de Lenguajes y compiladores 2</h2>
+        <h4>Ana Isabel Culajay Gonzalez 201602790</h4>
+        <br>
+        <h5>Durante la emergencia sanitaria provocada por el COVID-19, se ha observado un notable
+            incremento en la aplicación de nuevas tecnologías al campo de la salud y la investigación. Desde la
+            creación de todo tipo de dispositivos inteligentes destinados a detectar el más mínimo síntoma
+            indicativo de contagio, hasta el diseño de nuevos patrones de investigación en la cura del nuevo
+            coronavirus. <br>
 
-            <p>&nbsp; &nbsp; &nbsp; Universidad de San Carlos de Guatemala</p>
-            <p>&nbsp; &nbsp; &nbsp; Facultad de Ingenieria</p>
-            <p>&nbsp; &nbsp; &nbsp; Organizacion de lenguajes y compiladores 2</p>
-            <p>&nbsp; &nbsp; &nbsp; Ana Isabel Culajay Gonzalez 201602790</p>
+
+            Sin duda, la IA (Inteligencia Artificial) ha estado presente en todas y cada una de las etapas de
+            esta pandemia, e incluso en momentos previos a ella. En este sentido, se trató de una startup
+            canadiense –BlueDot- que, gracias a un algoritmo basado en inteligencia artificial, logró
+            predecirlo.
+        </h5>
+
+        <table style="border: hidden" align="center">
+            <tbody style="border: hidden">
+                <tr style="border: hidden">
+                    <th style="border: hidden" align="center">Tendencia de la infección por Covid-19 en un País</th>
+                    <td style="border: hidden"> </td>
+                    <th style="border: hidden" align="center">Interpretacion:</th>
+                </tr>
+
+                <tr style="border: hidden">
+                    <td style="border: hidden">Aqui va una pequena descripcion sobre conmo es una tendencia de infeccion
+                        del covid19 en un pais</td>
+                    <td style="border: hidden"></td>
+                    <td style="border: hidden"> Esta es la interpretacion de la grafica</td>
+                </tr>
+
+                <tr style="border: hidden">
+                    <th style="border: hidden"> Analisis de datos</th>
+                    <td style="border: hidden"></td>
+                    <td style="border: hidden"></td>
+                </tr>
+
+                <tr style="border: hidden">
+                    <td style="border: hidden"> Seccion por si se uso alguna formula</td>
+                    <td style="border: hidden"></td>
+                    <td style="border: hidden"></td>
+                </tr>
+                
+                <tr style="border: hidden">
+                    <td style="border: hidden" align="center"><img src=" {{url_for('static', filename = 'Reportes/rep1.png')}}" alt="Una imagen" width="400" height="400"></td>
+                    <td style="border: hidden"></td>
+                    <td style="border: hidden"> esta es una interpretacion de la grafica que se esta generando</td>
+                </tr>
+
+                <tr style="border: hidden">
+                    <td style="border: hidden"></td>
+                    <td style="border: hidden"></td>
+                    <td style="border: hidden">Bibliografia</td>
+                </tr>
+
+                <tr style="border: hidden">
+                    <td style="border: hidden"></td>
+                    <td style="border: hidden"></td>
+                    <td style="border: hidden">link 1</td>
+                </tr>
+
+                <tr style="border: hidden">
+                    <td style="border: hidden"></td>
+                    <td style="border: hidden"></td>
+                    <td style="border: hidden">link 2</td>
+                </tr>
+
+                <tr style="border: hidden">
+                    <td style="border: hidden"></td>
+                    <td style="border: hidden"></td>
+                    <td style="border: hidden">link 3</td>
+                </tr>
+            </tbody>
+        </table>
+
+    </center>
+
+    <center>
+        <br><br>
+        <button type="button" id="btnCrearPdf">Descargar</button>
+    </center>
 
 
-        <img src="{{url_for('static', filename = 'Reportes/rep2.png')}}" width="100" height="100">
-
-
-        <a href="javascript:pruebaDivAPdf()" class="button">Descargar</a>
-    </div>
-
-    </div>
-    <script>
-        function pruebaDivAPdf() {
-            var pdf = new jsPDF('p', 'pt', 'letter');
-            source = $('#print')[0];
-
-            specialElementHandlers = {
-                '#bypassme': function (element, renderer) {
-                    return true
-                }
-            };
-            margins = {
-                top: 80,
-                bottom: 60,
-                left: 40,
-                width: 522
-            };
-
-            pdf.fromHTML(
-                source,
-                margins.left, // x coord
-                margins.top, { // y coord
-                'width': margins.width,
-                'elementHandlers': specialElementHandlers
-            },
-
-                function (dispose) {
-                    pdf.save('Reporte1.pdf');
-                }, margins
-            );
-        }
-    </script>
 </body>
 
 </html>

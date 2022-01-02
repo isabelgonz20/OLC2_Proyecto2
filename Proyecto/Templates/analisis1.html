@@ -55,7 +55,8 @@
                         <tr>
                             <th>Seleccione la variable para el eje X &nbsp; &nbsp; &nbsp;</th>
                             <th>Seleccione la variable para el eje Y &nbsp; &nbsp; &nbsp;</th>
-                            <th>Ingrese el numero para su prediccion:</th>
+                            <th>Seleccione columna de paises &nbsp; &nbsp; &nbsp;</th>
+                            <th>Ingrese el nombre del pais:</th>
                         </tr>
                         <tr>
                             <td>
@@ -76,7 +77,15 @@
                             </td>
                             <td>
                                 <br>
-                                <input type="text" id="name" name="name" required minlength="1" maxlength="8" size="20">
+                                <select class="styled-select" id="pais">
+                                    {% for encabezado in Encabezados %}
+                                    <option value="{{encabezado}}">{{encabezado}}</option>
+                                    {% endfor %}
+                                </select>
+                            </td>
+                            <td>
+                                <br>
+                                <input type="text" id="name" name="name" required minlength="1" maxlength="20" size="20">
                             </td>
                         </tr>
                         <tr>
@@ -105,7 +114,7 @@
                             <th></th>
                         </tr>
                     </table>
-                    <img src="{{url_for('static', filename = 'Reportes/rep2.png')}}">
+                    <img src="{{url_for('static', filename = 'Reportes/rep1.png')}}">
 
                 </center>
 
@@ -156,12 +165,15 @@
         function nombreejes() {
 
             var ejex = document.getElementById("ejex").value;
-            var predi = document.getElementById("name").value;
+            //var predi = document.getElementById("name").value;
+            var seleccion_rep1 = document.getElementById("name").value;
             var ejey = document.getElementById("ejey").value;
+            var pais = document.getElementById("pais").value;
 
-            var ruta = "/rep2?ejex=" + ejex + "&ejey=" + ejey;
-            console.log(predi);
+            var ruta = "/rep1?ejex=" + ejex + "&ejey=" + ejey + "&pais=" + pais + "&seleccion_rep1=" + seleccion_rep1;
+            //console.log(predi);
             return location.href = ruta;
+            
         }
     </script>
 </body>
