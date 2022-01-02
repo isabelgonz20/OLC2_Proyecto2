@@ -32,20 +32,26 @@
     <main>
         <section class="gallery1" id="galeria">
             <div class="contenedor">
-                <h2 class="subtitulo">Predicción de Infectados en un País</h2>
+                <h2 class="subtitulo">Bienvenido al analisis de: Tendencia de la infección por Covid-19 en un País</h2>
                 <center>
                     <p align="center">
                     <form
-                        action="https://github.com/Jony198/COMPI2_DICIEMBRE_2021/blob/master/PROYECTO1/Manuales/Gramatica.md"
+                        action="/iniciorep1/regresionlineal"
                         style="display:inline">
-                        <button class="raise"> Predecir</button>
+                        <button class="raise"> Ingresar </button>
                     </form>
-
+                    <form
+                        action="/"
+                        style="display:inline">
+                        <span lang="es">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>
+                        <button class="raise">Regresar</button>
+                    </form>
                     </p>
                 </center>
             </div>
         </section>
         <div class="imagen-light">
+            
             <img src="{{url_for('static', filename = 'img/close.svg')}}" alt="" class="close">
             <img src="" alt="" class="agregar-imagen">
         </div>
@@ -63,4 +69,5 @@
     <script src="{{url_for('static', filename = 'js/menu.js')}}"></script>
     <script src="{{url_for('static', filename = 'js/lightbox.js')}}"></script>
 </body>
+
 </html>
