@@ -1261,6 +1261,179 @@ def Mandarmensaje17(descripcion):
     return render_template('IEEErep17.html', descripcion = descripcion)
 
 
+#______________________________________________Reporte 19______________________________________________________
+#------------------Predicción de muertes en el último día del primer año de infecciones en un país.-------------
+@app.route('/iniciorep19')
+def pagina40():
+    return render_template('iniciorep19.html')
+
+@app.route('/iniciorep19/regresionlineal19')
+def pagina41():
+    return render_template('analisis19.html', Encabezados = recorrertitulosExcel())
+
+@app.route('/iniciorep19/regresionlineal19/reporte19')
+def pagina42():
+    return render_template('IEEErep19.html')
+
+@app.route("/rep19")
+def Reporte19():
+    global nombre_archivito
+    contenido_archivo = pd.read_csv("Archivos/" + nombre_archivito)
+    ejex=request.args.get('ejex',None)
+    ejey=request.args.get('ejey',None)
+    pais=request.args.get('pais',None)
+    seleccion_rep1=request.args.get('seleccion_rep1',None)
+    predi=request.args.get('predi',None)
+    df=pd.DataFrame(contenido_archivo)
+    
+    #diapredi = int(predi)
+    ##print(diapredi)
+    #diapredi2 = ord(diapredi)
+    #print(diapredi2)
+
+    fecha_dt = datetime.strptime(predi, '%d/%m/%Y')
+    fecha_reci = fecha_dt.toordinal()
+    #fechita = int(fecha_dt.strftime("%Y%m%d"))
+    #print("estoy en fechita")
+    #print(fechita)
+
+    try:
+        df['date_ordinal'] = pd.to_datetime(df[df[pais]==seleccion_rep1][ejex],format='%d/%m/%Y').apply(lambda date: date.toordinal())
+    except:
+        df['date_ordinal'] = pd.to_datetime(df[df[pais]==seleccion_rep1][ejex],format='%Y/%m/%d').apply(lambda date: date.toordinal())
+
+
+    #predi = datetime.date(str(predi)).toordinal()
+    
+    x=np.asarray(df[df[pais]==seleccion_rep1]['date_ordinal']).reshape(-1,1)
+    y=df[df[pais]==seleccion_rep1][ejey]
+
+    plt.scatter(x,y)
+
+    # regression transform
+    poly_degree = 3
+    polynomial_features = PolynomialFeatures(degree = poly_degree)
+    x_transform = polynomial_features.fit_transform(x)
+
+    # fit the model
+    model = LinearRegression().fit(x_transform, y)
+    y_new = model.predict(x_transform)
+
+    # calculate rmse and r2
+    rmse = np.sqrt(mean_squared_error(y, y_new))
+    r2 = r2_score(y, y_new)
+    #print('RMSE: ', rmse)
+    #print('R2: ', r2)
+
+    # prediction
+    x_new_min = 0.0
+    x_new_max = fecha_reci #175
+
+    x_new = np.linspace(x_new_min, x_new_max, fecha_reci)
+    x_new = x_new[:,np.newaxis]
+
+    x_new_transform = polynomial_features.fit_transform(x_new)
+    y_new = model.predict(x_new_transform)
+
+    #
+    pred = y_new[np.size(y_new)-1]
+    # plot the prediction
+    plt.plot(x, y, color='coral', linewidth=3)
+    plt.grid()
+    #plt.xlim(x_new_min,x_new_max)
+    plt.ylim(np.min(y),np.max(y))
+    title = 'Degree = {}; RMSE = {}; R2 = {}; Prediccion = {}'.format(poly_degree, round(rmse,2), round(r2,2), round(pred,2))
+    plt.title("Predicción de muertes en el último día del primer año de infecciones en un país.\n " + title, fontsize=10)
+    plt.xlabel('Fecha')
+    plt.ylabel('Muertes')
+
+    plt.savefig("static/Reportes/rep19.png")
+    
+    #print(y_new[np.size(y_new)-1])
+    plt.close()
+    
+    if(r2 < 0.25):
+        descripcion = "Actualmente se esta viviendo una situacion a nivel mundial con la enfermedad de Covid-19, en lo cual todos los paises nos hemos vuelto muy suceptibles, por lo cual gracias a las herramientas actuales se puede decir que " + seleccion_rep1 + " se ve afectado de manera directa. Por lo cual realizando un analisis de regresion polinomial de grado 3, nos podemos dar cuenta que se tiene un error cuadrático medio de " + str(round(rmse,2)) + " este error medio nos indica la cantidad de de error que tenemos entre los conjuntos de datos " + " de fechas e infecciones que se estan dando en el pais este datos nos ayuda para poder evaluar la tendencia entre dos valores, ahora bien nos podemos dar cuenta que el valor del coeficiente de determinación " + str(round(r2,2)) + " indica que el modelo no explica ninguna porción de la variabilidad de los datos de respuesta en torno a su media es decir que los datos en este caso no se encuentran correlacionados ya que estan muy alejados de 1." + "Con una prediccion de infectados de " + str(round(pred,2))
+    elif(r2 < 0.5):
+        descripcion = "Actualmente se esta viviendo una situacion a nivel mundial con la enfermedad de Covid-19, en lo cual todos los paises nos hemos vuelto muy suceptibles, por lo cual gracias a las herramientas actuales se puede decir que " + seleccion_rep1 + " se ve afectado de manera directa. Por lo cual realizando un analisis de regresion polinomial de grado 3, nos podemos dar cuenta que se tiene un error cuadrático medio de " + str(round(rmse,2)) + " este error medio nos indica la cantidad de de error que tenemos entre los conjuntos de datos " + " de fechas e infecciones que se estan dando en el pais este datos nos ayuda para poder evaluar la tendencia entre dos valores, ahora bien nos podemos dar cuenta que el valor del coeficiente de determinación " + str(round(r2,2)) + " indica que el modelo no explica ninguna porción de la variabilidad de los datos de respuesta en torno a su media es decir que los datos en este caso casi no se encuentran correlacionados ya que estan muy alejados de 1." + "Con una prediccion de infectados de " + str(round(pred,2))
+    elif(r2 < 0.75):
+        descripcion = "Actualmente se esta viviendo una situacion a nivel mundial con la enfermedad de Covid-19, en lo cual todos los paises nos hemos vuelto muy suceptibles, por lo cual gracias a las herramientas actuales se puede decir que " + seleccion_rep1 + " se ve afectado de manera directa. Por lo cual realizando un analisis de regresion polinomial de grado 3, nos podemos dar cuenta que se tiene un error cuadrático medio de " + str(round(rmse,2)) + " este error medio nos indica la cantidad de de error que tenemos entre los conjuntos de datos " + " de fechas e infecciones que se estan dando en el pais este datos nos ayuda para poder evaluar la tendencia entre dos valores, ahora bien nos podemos dar cuenta que el valor del coeficiente de determinación " + str(round(r2,2)) + " indica que el modelo medio explica la porción de la variabilidad de los datos de respuesta en torno a su media es decir que los datos en este caso se encuentran un poco correlacionados ya que no estan muy alejados de 1." + "Con una prediccion de infectados de " + str(round(pred,2))
+    elif(r2 >= 0.95):
+        descripcion = "Actualmente se esta viviendo una situacion a nivel mundial con la enfermedad de Covid-19, en lo cual todos los paises nos hemos vuelto muy suceptibles, por lo cual gracias a las herramientas actuales se puede decir que " + seleccion_rep1 + " se ve afectado de manera directa. Por lo cual realizando un analisis de regresion polinomial de grado 3, nos podemos dar cuenta que se tiene un error cuadrático medio de " + str(round(rmse,2)) + " este error medio nos indica la cantidad de de error que tenemos entre los conjuntos de datos " + " de fechas e infecciones que se estan dando en el pais este datos nos ayuda para poder evaluar la tendencia entre dos valores, ahora bien nos podemos dar cuenta que el valor del coeficiente de determinación " + str(round(r2,2)) + " indica que el modelo indica que el modelo explica toda la variabilidad de los datos de respuesta en torno a su media es decir que los datos en este caso se encuentran correlacionados ya que estan muy cercanos a 1." + "Con una prediccion de infectados de " + str(round(pred,2))
+    
+    
+    #descripcion = "esta es la descripcicon del rep 2"
+    return render_template("analisis19.html", Encabezados = recorrertitulosExcel(), descripcion = descripcion)
+
+@app.route("/mensajeenviado19/<descripcion>")
+def Mandarmensaje19(descripcion):
+    return render_template('IEEErep19.html', descripcion = descripcion)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
