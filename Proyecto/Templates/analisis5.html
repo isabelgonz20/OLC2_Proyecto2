@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página web</title>
+    <link rel="stylesheet" href="{{url_for('static', filename = 'estilos.css')}}">
+    <link rel="stylesheet" media="all" href="{{url_for('static', filename = 'css/style.css')}}" />
+
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;700&display=swap" rel="stylesheet">
+    <link href='https://unpkg.com/boxicons@2.0.5/css/boxicons.min.css' rel='stylesheet'>
+</head>
+
+<body>
+
+    <header class="header" id="inicio">
+        <img class="hamburguer" src="{{url_for('static', filename = 'img/hamburguesa.svg')}}" alt="">
+        <nav class="menu-navegacion">
+            <a href="#inicio">Inicio</a>
+            <a href="#Carga">Cargar Archivo</a>
+            <a href="#analisis">análisis de información</a>
+            <a href="#expertos">Especializados</a>
+            <a href="#footer">Contacto</a>
+        </nav>
+        <div class="contenedor head">
+            <h1 class="titulo">Coronavirus Data Analysis</h1>
+            <p class="copy">Organizacion de lenguajes y compiladores 2</p>
+        </div>
+
+        <style>
+            input[type=text] {
+                width: 100%;
+                padding: 8px 20px;
+                margin: 8px 0;
+                box-sizing: border-box;
+                border: 3px solid #ccc;
+                -webkit-transition: 0.5s;
+                transition: 0.5s;
+                outline: none;
+            }
+
+            input[type=text]:focus {
+                border: 3px solid #555;
+            }
+        </style>
+    </header>
+    <main>
+        <section class="gallery1" id="galeria">
+            <div class="contenedor">
+                <h2 class="subtitulo">Predicción de mortalidad por COVID en un País</h2>
+                <br><br>
+                <center>
+                    <table class="default">
+                        <tr><!-- -->
+                            <th>Seleccione la variable para el eje X &nbsp; &nbsp; &nbsp;</th>
+                            <th>Seleccione la variable para el eje Y &nbsp; &nbsp; &nbsp;</th>
+                            <th>Seleccione columna del pais &nbsp; &nbsp; &nbsp;</th>
+                            <th>Ingrese el nombre del pais que desea: &nbsp; &nbsp; &nbsp;</th>
+                            <th>Ingrese el valor de la prediccion que desea: &nbsp; &nbsp; &nbsp;</th>
+                            
+                        </tr>
+                        <tr>
+                            <td>
+                                <br>
+                                <select class="styled-select" id="ejex">
+                                    {% for encabezado in Encabezados %}
+                                    <option value="{{encabezado}}">{{encabezado}}</option>
+                                    {% endfor %}
+                                </select>
+                            </td>
+                            <td>
+                                <br>
+                                <select class="styled-select" id="ejey">
+                                    {% for encabezado in Encabezados %}
+                                    <option value="{{encabezado}}">{{encabezado}}</option>
+                                    {% endfor %}
+                                </select>
+                            </td>
+                            <td>
+                                <br>
+                                <select class="styled-select" id="pais">
+                                    {% for encabezado in Encabezados %}
+                                    <option value="{{encabezado}}">{{encabezado}}</option>
+                                    {% endfor %}
+                                </select>
+                            </td>
+                            <td>
+                                <br>
+                                <input type="text" id="name" name="name" required minlength="1" maxlength="20" size="20">
+                            </td>
+                            <td>
+                                <br>
+                                <input type="text" id="name2" name="name2" required minlength="1" maxlength="20" size="20">
+                            </td>
+                        </tr>
+                        <tr>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                        <tr>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                        <tr>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                        <tr>
+                            <th style="text-align: left">Gráfica &nbsp; &nbsp; &nbsp;</th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                        <tr>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </table>
+                    <img src="{{url_for('static', filename = 'Reportes/rep5.png')}}">
+
+                </center> 
+
+                <table class="default" style="text-align: left">
+                    <tr>
+                        <th style="text-align: left">Interpretación:</th>
+                        <td></td>
+                    </tr>
+                </table>
+                <br>
+                <textarea name="textarea" rows="10" cols="160">
+                    {% if descripcion != None%}
+                        {{descripcion}}
+                    {% endif %}
+                </textarea>
+
+                <center>
+                    <p align="center">
+                    <form style="display:inline">
+                        <br><br>
+                        <button type="button" class="raise" onclick="nombreejes5()"> Predecir</button>
+                    </form>
+
+                    <form action="/mensajeenviado5/{{descripcion}}" style="display:inline">
+                        <button class="raise" > Reporte IEEE</button>
+                    </form>
+
+                    </p>
+                </center>
+            </div>
+        </section>
+        <div class="imagen-light">
+            <img src="{{url_for('static', filename = 'img/close.svg')}}" alt="" class="close">
+            <img src="" alt="" class="agregar-imagen">
+        </div>
+    </main>
+
+    <footer id="footer">
+        <div class="contenedor footer-content">
+            <div class="contact-us">
+                <h5 class="brand">Ana Isabel Culajay Gonzalez 201602790</h5>
+                <p>Lenguajes y Compiladores 2</p>
+            </div>
+        </div>
+        <div class="line"></div>
+    </footer>
+    <script src="{{url_for('static', filename = 'js/menu.js')}}"></script>
+    <script src="{{url_for('static', filename = 'js/lightbox.js')}}"></script>
+    <script src="{{url_for('static', filename = 'html2pdf.bundle.min.js')}}"></script>
+    <script src="{{url_for('static', filename = 'script.js')}}"></script>
+
+    <script type="text/javascript">
+
+        function nombreejes5() {
+
+            var ejex = document.getElementById("ejex").value;
+            //var predi = document.getElementById("name").value;
+            var seleccion_rep1 = document.getElementById("name").value;
+            var ejey = document.getElementById("ejey").value;
+            var pais = document.getElementById("pais").value;
+            var predi = document.getElementById("name2").value;
+
+            var ruta = "/rep5?ejex=" + ejex + "&ejey=" + ejey + "&pais=" + pais + "&seleccion_rep1=" + seleccion_rep1 + "&predi=" + predi;
+            //console.log(predi);
+            return location.href = ruta;
+            
+        }
+    </script>
+</body>
+
+</html>
