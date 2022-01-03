@@ -48,7 +48,7 @@
     <main>
         <section class="gallery1" id="galeria">
             <div class="contenedor">
-                <h2 class="subtitulo">Tendencia del número de infectados por día de un País</h2>
+                <h2 class="subtitulo">Tendencia de la vacunación de en un País</h2>
                 <br><br>
                 <center>
                     <table class="default">
@@ -114,7 +114,7 @@
                             <th></th>
                         </tr>
                     </table>
-                    <img src="{{url_for('static', filename = 'Reportes/rep7.png')}}">
+                    <img src="{{url_for('static', filename = 'Reportes/rep9.png')}}">
 
                 </center>
 
@@ -135,10 +135,10 @@
                     <p align="center">
                     <form style="display:inline">
                         <br><br>
-                        <button type="button" class="raise" onclick="nombreejes7()"> Predecir</button>
+                        <button type="button" class="raise" onclick="nombreejes9()"> Predecir</button>
                     </form>
 
-                    <form action="/mensajeenviado7/{{descripcion}}" style="display:inline">
+                    <form action="/mensajeenviado9/{{descripcion}}" style="display:inline">
                         <button  class="raise" > Reporte IEEE</button>
                     </form>
 
@@ -168,7 +168,7 @@
 
     <script type="text/javascript">
 
-        function nombreejes7() {
+        function nombreejes9() {
 
             var ejex = document.getElementById("ejex").value;
             //var predi = document.getElementById("name").value;
@@ -176,7 +176,7 @@
             var ejey = document.getElementById("ejey").value;
             var pais = document.getElementById("pais").value;
 
-            var ruta = "/rep7?ejex=" + ejex + "&ejey=" + ejey + "&pais=" + pais + "&seleccion_rep1=" + seleccion_rep1;
+            var ruta = "/rep9?ejex=" + ejex + "&ejey=" + ejey + "&pais=" + pais + "&seleccion_rep1=" + seleccion_rep1;
             //console.log(predi);
             return location.href = ruta;
             
