@@ -48,15 +48,14 @@
     <main>
         <section class="gallery1" id="galeria">
             <div class="contenedor">
-                <h2 class="subtitulo">Tendencia de la infección por Covid-19 en un País</h2>
+                <h2 class="subtitulo">Indice de Progresión de la pandemia</h2>
                 <br><br>
                 <center>
                     <table class="default">
                         <tr>
+                            <!-- -->
                             <th>Seleccione la variable para el eje X &nbsp; &nbsp; &nbsp;</th>
                             <th>Seleccione la variable para el eje Y &nbsp; &nbsp; &nbsp;</th>
-                            <th>Seleccione columna de paises &nbsp; &nbsp; &nbsp;</th>
-                            <th>Ingrese el nombre del pais:</th>
                         </tr>
                         <tr>
                             <td>
@@ -74,18 +73,6 @@
                                     <option value="{{encabezado}}">{{encabezado}}</option>
                                     {% endfor %}
                                 </select>
-                            </td>
-                            <td>
-                                <br>
-                                <select class="styled-select" id="pais">
-                                    {% for encabezado in Encabezados %}
-                                    <option value="{{encabezado}}">{{encabezado}}</option>
-                                    {% endfor %}
-                                </select>
-                            </td>
-                            <td>
-                                <br>
-                                <input type="text" id="name" name="name" required minlength="1" maxlength="20" size="20">
                             </td>
                         </tr>
                         <tr>
@@ -114,7 +101,7 @@
                             <th></th>
                         </tr>
                     </table>
-                    <img src="{{url_for('static', filename = 'Reportes/rep1.png')}}">
+                    <img src="{{url_for('static', filename = 'Reportes/rep2.png')}}">
 
                 </center>
 
@@ -135,11 +122,11 @@
                     <p align="center">
                     <form style="display:inline">
                         <br><br>
-                        <button type="button" class="raise" onclick="nombreejes()"> Predecir</button>
+                        <button type="button" class="raise" onclick="nombreejes2()"> Predecir</button>
                     </form>
 
-                    <form action="/mensajeenviado1/{{descripcion}}" style="display:inline">
-                        <button  class="raise" > Reporte IEEE</button>
+                    <form action="/mensajeenviado/{{descripcion}}" style="display:inline">
+                        <button class="raise"> Reporte IEEE</button>
                     </form>
 
                     </p>
@@ -168,18 +155,16 @@
 
     <script type="text/javascript">
 
-        function nombreejes() {
+        function nombreejes2() {
 
             var ejex = document.getElementById("ejex").value;
             //var predi = document.getElementById("name").value;
-            var seleccion_rep1 = document.getElementById("name").value;
             var ejey = document.getElementById("ejey").value;
-            var pais = document.getElementById("pais").value;
 
-            var ruta = "/rep1?ejex=" + ejex + "&ejey=" + ejey + "&pais=" + pais + "&seleccion_rep1=" + seleccion_rep1;
+            var ruta = "/rep2?ejex=" + ejex + "&ejey=" + ejey;
             //console.log(predi);
             return location.href = ruta;
-            
+
         }
     </script>
 </body>

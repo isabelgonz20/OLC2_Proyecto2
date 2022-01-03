@@ -48,15 +48,17 @@
     <main>
         <section class="gallery1" id="galeria">
             <div class="contenedor">
-                <h2 class="subtitulo">Tendencia de la infección por Covid-19 en un País</h2>
+                <h2 class="subtitulo">Predicción de Infectados en un País</h2>
                 <br><br>
                 <center>
                     <table class="default">
-                        <tr>
+                        <tr><!-- -->
                             <th>Seleccione la variable para el eje X &nbsp; &nbsp; &nbsp;</th>
                             <th>Seleccione la variable para el eje Y &nbsp; &nbsp; &nbsp;</th>
                             <th>Seleccione columna de paises &nbsp; &nbsp; &nbsp;</th>
-                            <th>Ingrese el nombre del pais:</th>
+                            <th>Ingrese el nombre del pais que desea: &nbsp; &nbsp; &nbsp;</th>
+                            <th>Ingrese el valor de la prediccion que desea: &nbsp; &nbsp; &nbsp;</th>
+                            
                         </tr>
                         <tr>
                             <td>
@@ -87,6 +89,10 @@
                                 <br>
                                 <input type="text" id="name" name="name" required minlength="1" maxlength="20" size="20">
                             </td>
+                            <td>
+                                <br>
+                                <input type="text" id="name2" name="name2" required minlength="1" maxlength="20" size="20">
+                            </td>
                         </tr>
                         <tr>
                             <th></th>
@@ -114,9 +120,9 @@
                             <th></th>
                         </tr>
                     </table>
-                    <img src="{{url_for('static', filename = 'Reportes/rep1.png')}}">
+                    <img src="{{url_for('static', filename = 'Reportes/rep2.png')}}">
 
-                </center>
+                </center> 
 
                 <table class="default" style="text-align: left">
                     <tr>
@@ -135,11 +141,11 @@
                     <p align="center">
                     <form style="display:inline">
                         <br><br>
-                        <button type="button" class="raise" onclick="nombreejes()"> Predecir</button>
+                        <button type="button" class="raise" onclick="nombreejes2()"> Predecir</button>
                     </form>
 
-                    <form action="/mensajeenviado1/{{descripcion}}" style="display:inline">
-                        <button  class="raise" > Reporte IEEE</button>
+                    <form action="/mensajeenviado/{{descripcion}}" style="display:inline">
+                        <button class="raise" > Reporte IEEE</button>
                     </form>
 
                     </p>
@@ -168,15 +174,16 @@
 
     <script type="text/javascript">
 
-        function nombreejes() {
+        function nombreejes2() {
 
             var ejex = document.getElementById("ejex").value;
             //var predi = document.getElementById("name").value;
             var seleccion_rep1 = document.getElementById("name").value;
             var ejey = document.getElementById("ejey").value;
             var pais = document.getElementById("pais").value;
+            var predi = document.getElementById("name2").value;
 
-            var ruta = "/rep1?ejex=" + ejex + "&ejey=" + ejey + "&pais=" + pais + "&seleccion_rep1=" + seleccion_rep1;
+            var ruta = "/rep2?ejex=" + ejex + "&ejey=" + ejey + "&pais=" + pais + "&seleccion_rep1=" + seleccion_rep1 + "&predi=" + predi;
             //console.log(predi);
             return location.href = ruta;
             

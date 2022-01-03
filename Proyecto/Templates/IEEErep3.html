@@ -36,26 +36,23 @@
         <table style="border: hidden" align="center">
             <tbody style="border: hidden">
                 <tr style="border: hidden">
-                    <th style="border: hidden" align="center">Tendencia de la infección por Covid-19 en un País</th>
+                    <th style="border: hidden" align="center">Predicción de Infectados en un País</th>
                     <td style="border: hidden"> </td>
                     <th style="border: hidden" align="center">Interpretacion:</th>
                 </tr>
 
                 <tr style="border: hidden">
-                    <td style="border: hidden">Las tendencias responden a distintos estímulos. En ocasiones son adoptadas
-                        lentamente, a lo largo de cambios en la cultura, mientras en otras ocurren por una
-                        masiva adopción causada por un fuerte estímulo externo. En un mundo dominado
-                        por enormes organizaciones que muchas veces se constituyen en reglas antiguas,
-                        un shock como el del COVID-19 puede generar grandes cambios en la forma que
-                        se opera la economía.
+                    <td style="border: hidden">En la investigación publicada por Nature y su revista npj Digital
+                        Medicine titulada: “Predicción basada en el aprendizaje automático del diagnóstico de COVID-19
+                        basado en los síntomas”, los investigadores planearon un enfoque basado en aprendizaje
+                        automático con registros de 51 mil 831 personas probadas, de las cuales 4 mil 769 resultaron
+                        positivas. Los datos fueron obtenidos del Ministerios de Salud de Israel, lugar de origen de los
+                        investigadores.
                         <br>
-                        La gente elige en entornos familiares, rutinarios y seguros que les simplifican esa
-                        toma de decisiones, que muchas veces se vuelve automática. Pero la inestabilidad
-                        que ha traído el COVID-19 ha creado ambientes fuera de contexto, no familiares y
-                        sin predictibilidad. En este nuevo ambiente las empresas deben encontrar la forma
-                        de adaptarse para sobrevivir, porque la historia ha probado que incluso en la
-                        hostilidad de las crisis las empresas nuevas o innovadoras pueden prosperar.
-                        </td>
+                        El modelo predijo los resultados de pruebas al utilizar ocho características: sexo, edad >60
+                        años, contacto con infectados, y la aparición de cinco síntomas. De esta manera se pueden
+                        priorizar las pruebas de COVID-19 cuando los recursos son limitados.
+                    </td>
                     <td style="border: hidden"></td>
                     <td style="border: hidden"> {{descripcion}} </td>
                 </tr>
@@ -67,13 +64,15 @@
                 </tr>
 
                 <tr style="border: hidden">
-                    <td style="border: hidden"> </td>
+                    <td style="border: hidden"></td>
                     <td style="border: hidden"></td>
                     <td style="border: hidden"></td>
                 </tr>
-                
+
                 <tr style="border: hidden">
-                    <td style="border: hidden" align="center"><img src=" {{url_for('static', filename = 'Reportes/rep1.png')}}" alt="Una imagen" width="400" height="400"></td>
+                    <td style="border: hidden" align="center">
+                        <img src=" {{url_for('static', filename = 'Reportes/rep2.png')}}" alt="Una imagen" width="400" height="400">
+                    </td>
                     <td style="border: hidden"></td>
                     <td style="border: hidden"></td>
                 </tr>
