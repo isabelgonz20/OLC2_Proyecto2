@@ -101,7 +101,7 @@
                             <th></th>
                         </tr>
                     </table>
-                    <img src="{{url_for('static', filename = 'Reportes/rep2.png')}}">
+                    <img src="{{url_for('static', filename = 'Reportes/rep3.png')}}">
 
                 </center>
 
@@ -122,10 +122,10 @@
                     <p align="center">
                     <form style="display:inline">
                         <br><br>
-                        <button type="button" class="raise" onclick="nombreejes2()"> Predecir</button>
+                        <button type="button" class="raise" onclick="nombreejes3()"> Predecir</button>
                     </form>
 
-                    <form action="/mensajeenviado/{{descripcion}}" style="display:inline">
+                    <form action="/mensajeenviado3/{{descripcion}}" style="display:inline">
                         <button class="raise"> Reporte IEEE</button>
                     </form>
 
@@ -155,13 +155,13 @@
 
     <script type="text/javascript">
 
-        function nombreejes2() {
+        function nombreejes3() {
 
             var ejex = document.getElementById("ejex").value;
             //var predi = document.getElementById("name").value;
             var ejey = document.getElementById("ejey").value;
 
-            var ruta = "/rep2?ejex=" + ejex + "&ejey=" + ejey;
+            var ruta = "/rep3?ejex=" + ejex + "&ejey=" + ejey;
             //console.log(predi);
             return location.href = ruta;
 
