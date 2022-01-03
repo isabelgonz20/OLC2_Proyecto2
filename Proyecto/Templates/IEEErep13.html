@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Convertir HTML a PDF</title>
+    <!-- El script de la librería-->
+    <script src="{{url_for('static', filename = 'html2pdf.bundle.min.js')}}"></script>
+    <!--Nuestro script, que se encarga de crear el PDF usando la librería-->
+    <script src="{{url_for('static', filename = 'script.js')}}"></script>
+    <!-- Algunos estilos -->
+    <link rel="stylesheet" href="{{url_for('static', filename = 'style1.css')}}">
+</head>
+
+<body>
+    <center>
+        <h1>Universidad de San Carlos</h1>
+        <h2>Facultad de Ingenieria</h2>
+        <h2>Organizacion de Lenguajes y compiladores 2</h2>
+        <h4>Ana Isabel Culajay Gonzalez 201602790</h4>
+        <br>
+        <h5>Durante la emergencia sanitaria provocada por el COVID-19, se ha observado un notable
+            incremento en la aplicación de nuevas tecnologías al campo de la salud y la investigación. Desde la
+            creación de todo tipo de dispositivos inteligentes destinados a detectar el más mínimo síntoma
+            indicativo de contagio, hasta el diseño de nuevos patrones de investigación en la cura del nuevo
+            coronavirus. <br>
+
+
+            Sin duda, la IA (Inteligencia Artificial) ha estado presente en todas y cada una de las etapas de
+            esta pandemia, e incluso en momentos previos a ella. En este sentido, se trató de una startup
+            canadiense –BlueDot- que, gracias a un algoritmo basado en inteligencia artificial, logró
+            predecirlo.
+        </h5>
+
+        <table style="border: hidden" align="center">
+            <tbody style="border: hidden">
+                <tr style="border: hidden">
+                    <th style="border: hidden" align="center">Porcentaje de muertes frente al total de casos en un país,
+                        región o continente.</th>
+                    <td style="border: hidden"> </td>
+                    <th style="border: hidden" align="center">Interpretacion:</th>
+                </tr>
+
+                <tr style="border: hidden">
+                    <td style="border: hidden">El coronavirus afecta de manera desproporcionada a las poblaciones
+                        vulnerables, y corren mayor riesgo de contraerlo quienes viven en entornos superpoblados.
+                        Además, el estudio apunta que la falta de desglose de los datos favorece la desigualdad de los
+                        resultados sanitarios, ya que solo el 51% de los países incluyen datos desglosados en sus
+                        informes estadísticos nacionales. 
+                        <br>
+                        Uruguay y Panamá fueron los países que destacaron de todos los
+                        evaluados,
+                        tuvieron una mayor cantidad de casos confirmados ponderados en la primera semana de la pandemia.
+                    </td>
+                    <td style="border: hidden"></td>
+                    <td style="border: hidden"> {{descripcion}} </td>
+                </tr>
+
+                <tr style="border: hidden">
+                    <th style="border: hidden"> Analisis de datos</th>
+                    <td style="border: hidden"></td>
+                    <td style="border: hidden"></td>
+                </tr>
+
+                <tr style="border: hidden">
+                    <td style="border: hidden"> </td>
+                    <td style="border: hidden"></td>
+                    <td style="border: hidden"></td>
+                </tr>
+
+                <tr style="border: hidden">
+                    <td style="border: hidden" align="center"><img
+                            src=" {{url_for('static', filename = 'Reportes/rep13.png')}}" alt="Una imagen" width="400"
+                            height="400"></td>
+                    <td style="border: hidden"></td>
+                    <td style="border: hidden"></td>
+                </tr>
+
+                <tr style="border: hidden">
+                    <td style="border: hidden"></td>
+                    <td style="border: hidden"></td>
+                    <th style="border: hidden">Bibliografia</th>
+                </tr>
+
+                <tr style="border: hidden">
+                    <td style="border: hidden"></td>
+                    <td style="border: hidden"></td>
+                    <td style="border: hidden">
+                        https://scikit-learn.org/stable/modules/linear_model.html#bayesian-regression</td>
+                </tr>
+
+                <tr style="border: hidden">
+                    <td style="border: hidden"></td>
+                    <td style="border: hidden"></td>
+                    <td style="border: hidden">
+                        https://scikit-learn.org/stable/modules/linear_model.html#polynomial-regression-extending-linear-models-with-basis-functions
+                    </td>
+                </tr>
+
+                <tr style="border: hidden">
+                    <td style="border: hidden"></td>
+                    <td style="border: hidden"></td>
+                    <td style="border: hidden">https://github.com/harias25/olc2-diciembre-2021/tree/main/Proyecto%202
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+    </center>
+
+    <center>
+        <br><br>
+        <button type="button" id="btnCrearPdf">Descargar</button>
+    </center>
+
+
+</body>
+
+</html>
