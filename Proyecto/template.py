@@ -1745,6 +1745,140 @@ def Mandarmensaje22(descripcion):
     return render_template('IEEErep22.html', descripcion = descripcion)
 
 
+#______________________________________________Reporte 24______________________________________________________
+#--------------Comparación entre el número de casos detectados y el número de pruebas de un país.--------------
+@app.route('/iniciorep24')
+def pagina52():
+    return render_template('iniciorep24.html')
+
+@app.route('/iniciorep24/regresionlineal24')
+def pagina53():
+    return render_template('analisis24.html', Encabezados = recorrertitulosExcel())
+
+@app.route('/iniciorep24/regresionlineal24/reporte24')
+def pagina54():
+    return render_template('IEEErep24.html')
+
+@app.route("/rep24")
+def Reporte24():
+    global nombre_archivito
+    contenido_archivo = pd.read_csv("Archivos/" + nombre_archivito)
+    ejex=request.args.get('ejex',None)
+    ejey=request.args.get('ejey',None)
+    pais=request.args.get('pais',None)
+    seleccion_rep1=request.args.get('seleccion_rep1',None)
+    df=pd.DataFrame(contenido_archivo)
+    
+    try:
+        df['date_ordinal'] = pd.to_datetime(df[df[pais]==seleccion_rep1][ejex],format='%d/%m/%Y').apply(lambda date: date.toordinal())
+    except:
+        df['date_ordinal'] = pd.to_datetime(df[df[pais]==seleccion_rep1][ejex],format='%Y/%m/%d').apply(lambda date: date.toordinal())
+
+    x=np.asarray(df[df[pais]==seleccion_rep1]['date_ordinal']).reshape(-1,1)
+    y=df[df[pais]==seleccion_rep1][ejey]
+    
+    plt.scatter(x,y)
+
+    # regression transform
+    poly_degree = 3
+    polynomial_features = PolynomialFeatures(degree = poly_degree)
+    x_transform = polynomial_features.fit_transform(x)
+
+    # fit the model
+    model = LinearRegression().fit(x_transform, y)
+    y_new = model.predict(x_transform)
+
+    # calculate rmse and r2
+    rmse = np.sqrt(mean_squared_error(y, y_new))
+    r2 = r2_score(y, y_new)
+    #print('RMSE: ', rmse)
+    #print('R2: ', r2)
+
+    # prediction
+    x_new_min = 0.0
+    x_new_max = 50.0
+
+    x_new = np.linspace(x_new_min, x_new_max, 50)
+    x_new = x_new[:,np.newaxis]
+
+    x_new_transform = polynomial_features.fit_transform(x_new)
+    y_new = model.predict(x_new_transform)
+
+    # plot the prediction
+    plt.plot(x, y, color='coral', linewidth=3)
+    plt.grid()
+    #plt.xlim(x_new_min,x_new_max)
+    plt.ylim(np.min(y),np.max(y))
+    title = 'Degree = {}; RMSE = {}; R2 = {}'.format(poly_degree, round(rmse,2), round(r2,2))
+    plt.title("Casos detectados de un país. " + seleccion_rep1 + "\n" + title, fontsize=10)
+    plt.xlabel('Fecha')
+    plt.ylabel('Infectados')
+
+    plt.savefig("static/Reportes/rep24.png")
+
+    plt.close()
+
+    #seleccion_rep2=request.args.get('seleccion_rep2',None)
+    ejey2=request.args.get('ejey2',None)
+    #print("Estoy en seleccion")
+    #print(seleccion_rep2)
+    df=pd.DataFrame(contenido_archivo)
+    y=df[df[pais]==seleccion_rep1][ejey2]
+    #y=df[ejey2]
+    
+
+    plt.scatter(x,y)
+
+    # regression transform
+    poly_degree = 3
+    polynomial_features = PolynomialFeatures(degree = poly_degree)
+    x_transform = polynomial_features.fit_transform(x)
+
+    # fit the model
+    model = LinearRegression().fit(x_transform, y)
+    y_new = model.predict(x_transform)
+
+    # calculate rmse and r2
+    rmse = np.sqrt(mean_squared_error(y, y_new))
+    r2 = r2_score(y, y_new)
+    #print('RMSE: ', rmse)
+    #print('R2: ', r2)
+
+    # prediction
+    x_new_min = 0.0
+    x_new_max = 50.0
+
+    x_new = np.linspace(x_new_min, x_new_max, 50)
+    x_new = x_new[:,np.newaxis]
+
+    x_new_transform = polynomial_features.fit_transform(x_new)
+    y_new = model.predict(x_new_transform)
+
+    # plot the prediction
+    plt.plot(x, y, color='coral', linewidth=3)
+    plt.grid()
+    #plt.xlim(x_new_min,x_new_max)
+    plt.ylim(np.min(y),np.max(y))
+    title = 'Degree = {}; RMSE = {}; R2 = {}'.format(poly_degree, round(rmse,2), round(r2,2))
+    plt.title("Número de pruebas de un país. " + seleccion_rep1 + "\n" + title, fontsize=10)
+    plt.xlabel('Fecha')
+    plt.ylabel('Pruebas')
+
+    plt.savefig("static/Reportes/rep241.png")
+
+    plt.close()
+
+
+    descripcion = "Actualmente se esta viviendo una situacion a nivel mundial con la enfermedad de Covid-19, en lo cual todos los paises nos hemos vuelto muy suceptibles, por lo cual gracias a las herramientas actuales se puede decir que " + seleccion_rep1 + " se ven afectados de manera directa. Por lo cual realizando un analisis de regresion polinomial de grado 3, nos podemos dar cuenta que se tiene un error cuadrático medio de " + str(round(rmse,2)) + " este error medio nos indica la cantidad de de error que tenemos entre los conjuntos de datos " + " de fechas e infecciones que se estan dando en el pais este datos nos ayuda para poder evaluar la tendencia entre dos valores, ahora bien nos podemos dar cuenta que el valor del coeficiente de determinación " + str(round(r2,2)) + " indica que el modelo indica que el modelo explica toda la variabilidad de los datos de respuesta en torno a su media, por lo cual nos podemos dar cuenta que los indices de vacunacion van subiendo ya que las personas estan tomando conciencia que se deben de vacunar, aunque aun falta bastante genente a la cual llegar con la vacuna"
+    
+
+    #descripcion = "Actualmente se esta viviendo una situacion a nivel mundial con la enfermedad de Covid-19, en lo cual todos los paises nos hemos vuelto muy suceptibles, por lo cual gracias a las herramientas actuales se puede decir que " + seleccion_rep1 + " se ve afectado de manera directa. Por lo cual realizando un analisis de regresion polinomial de grado 3, nos podemos dar cuenta que se tiene un error cuadrático medio de " + str(round(rmse,2)) + " este error medio nos indica la cantidad de de error que tenemos entre los conjuntos de datos " + " de fechas e infecciones que se estan dando en el pais este datos nos ayuda para poder evaluar la tendencia entre dos valores, ahora bien nos podemos dar cuenta que "
+    
+    return render_template("analisis24.html", Encabezados = recorrertitulosExcel(), descripcion = descripcion)
+
+@app.route("/mensajeenviado24/<descripcion>")
+def Mandarmensaje24(descripcion):
+    return render_template('IEEErep24.html', descripcion = descripcion)
 
 
 
