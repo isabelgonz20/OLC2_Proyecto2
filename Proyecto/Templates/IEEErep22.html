@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Convertir HTML a PDF</title>
+    <!-- El script de la librería-->
+    <script src="{{url_for('static', filename = 'html2pdf.bundle.min.js')}}"></script>
+    <!--Nuestro script, que se encarga de crear el PDF usando la librería-->
+    <script src="{{url_for('static', filename = 'script.js')}}"></script>
+    <!-- Algunos estilos -->
+    <link rel="stylesheet" href="{{url_for('static', filename = 'style1.css')}}">
+</head>
+
+<body>
+    <center>
+        <h1>Universidad de San Carlos</h1>
+        <h2>Facultad de Ingenieria</h2>
+        <h2>Organizacion de Lenguajes y compiladores 2</h2>
+        <h4>Ana Isabel Culajay Gonzalez 201602790</h4>
+        <br>
+        <h5>Durante la emergencia sanitaria provocada por el COVID-19, se ha observado un notable
+            incremento en la aplicación de nuevas tecnologías al campo de la salud y la investigación. Desde la
+            creación de todo tipo de dispositivos inteligentes destinados a detectar el más mínimo síntoma
+            indicativo de contagio, hasta el diseño de nuevos patrones de investigación en la cura del nuevo
+            coronavirus. <br>
+
+
+            Sin duda, la IA (Inteligencia Artificial) ha estado presente en todas y cada una de las etapas de
+            esta pandemia, e incluso en momentos previos a ella. En este sentido, se trató de una startup
+            canadiense –BlueDot- que, gracias a un algoritmo basado en inteligencia artificial, logró
+            predecirlo.
+        </h5>
+
+        <table style="border: hidden" align="center">
+            <tbody style="border: hidden">
+                <tr style="border: hidden">
+                    <th style="border: hidden" align="center">Tasa de mortalidad por coronavirus (COVID-19) en un país.
+                    </th>
+                    <td style="border: hidden"> </td>
+                    <th style="border: hidden" align="center">Interpretacion:</th>
+                </tr>
+
+                <tr style="border: hidden">
+                    <td style="border: hidden">Cuando hablamos del número de muertes causada por la COVID-19, solemos
+                        referirnos a la tasa de letalidad, es decir, la probabilidad que tenemos de morir una vez que te
+                        contagias. Pues bien, los datos oficiales entre países son tremendamente diferentes. Tenemos
+                        0,1% en Singapur, 9,3% en Perú, 8,9% en México, 1,8% en Estados Unidos, 3% en Italia, 2,8% en
+                        Brasil, 4,7% en China o 1,9% en España.
+
+                        La tasa de mortalidad de la COVID-19 a partir de los datos de seroprevalencia de estudios que
+                        incluyeran más de 500 personas, efectuados hasta el 9 de septiembre de 2020. Incluyó 61 estudios
+                        y ocho estimaciones nacionales preliminares. Las estimaciones de seroprevalencia entre los
+                        distintos estudios, es decir, el cálculo de la proporción de gente infectada entre el total,
+                        oscilaron ni más ni menos que entre el 0,02% y el 53,40%. Y las tasas de letalidad por infección
+                        variaron de 0,00% a 1,54%. Con estos datos llegó a una mediana de tasa de letalidad del 0,23%.
+                        Esto significa que había un 50% de estudios por debajo de 0,23 % y un 50% de estudios por encima
+                        de esa cifra.
+                    </td>
+                    <td style="border: hidden"></td>
+                    <td style="border: hidden"> {{descripcion}} </td>
+                </tr>
+
+                <tr style="border: hidden">
+                    <th style="border: hidden"> Analisis de datos</th>
+                    <td style="border: hidden"></td>
+                    <td style="border: hidden"></td>
+                </tr>
+
+                <tr style="border: hidden">
+                    <td style="border: hidden"> </td>
+                    <td style="border: hidden"></td>
+                    <td style="border: hidden"></td>
+                </tr>
+
+                <tr style="border: hidden">
+                    <td style="border: hidden" align="center"><img
+                            src=" {{url_for('static', filename = 'Reportes/rep22.png')}}" alt="Una imagen" width="400"
+                            height="400"></td>
+                    <td style="border: hidden"></td>
+                    <td style="border: hidden"></td>
+                </tr>
+
+                <tr style="border: hidden">
+                    <td style="border: hidden"></td>
+                    <td style="border: hidden"></td>
+                    <th style="border: hidden">Bibliografia</th>
+                </tr>
+
+                <tr style="border: hidden">
+                    <td style="border: hidden"></td>
+                    <td style="border: hidden"></td>
+                    <td style="border: hidden">
+                        https://scikit-learn.org/stable/modules/linear_model.html#bayesian-regression</td>
+                </tr>
+
+                <tr style="border: hidden">
+                    <td style="border: hidden"></td>
+                    <td style="border: hidden"></td>
+                    <td style="border: hidden">
+                        https://scikit-learn.org/stable/modules/linear_model.html#polynomial-regression-extending-linear-models-with-basis-functions
+                    </td>
+                </tr>
+
+                <tr style="border: hidden">
+                    <td style="border: hidden"></td>
+                    <td style="border: hidden"></td>
+                    <td style="border: hidden">https://github.com/harias25/olc2-diciembre-2021/tree/main/Proyecto%202
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+    </center>
+
+    <center>
+        <br><br>
+        <button type="button" id="btnCrearPdf">Descargar</button>
+    </center>
+
+
+</body>
+
+</html>
