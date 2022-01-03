@@ -1506,6 +1506,151 @@ def Reporte20():
 def Mandarmensaje20(descripcion):
     return render_template('IEEErep20.html', descripcion = descripcion)
 
+#______________________________________________Reporte 21______________________________________________________
+#-------------------Predicciones de casos y muertes en todo el mundo - Neural Network MLPRegressor-------------
+@app.route('/iniciorep21')
+def pagina46():
+    return render_template('iniciorep21.html')
+
+@app.route('/iniciorep21/regresionlineal21')
+def pagina47():
+    return render_template('analisis21.html', Encabezados = recorrertitulosExcel())
+
+@app.route('/iniciorep21/regresionlineal21/reporte21')
+def pagina48():
+    return render_template('IEEErep21.html')
+
+@app.route("/rep21")
+def Reporte21():
+    global nombre_archivito
+    contenido_archivo = pd.read_csv("Archivos/" + nombre_archivito)
+    ejex=request.args.get('ejex',None)
+    ejey=request.args.get('ejey',None)
+    predi=request.args.get('predi',None)
+    #pais=request.args.get('pais',None)
+    #seleccion_rep1=request.args.get('seleccion_rep1',None)
+    df=pd.DataFrame(contenido_archivo)
+    
+    fecha_dt = datetime.strptime(predi, '%d/%m/%Y')
+    fecha_reci = fecha_dt.toordinal()
+
+    try:
+        df['date_ordinal'] = pd.to_datetime(df[ejex],format='%d/%m/%Y').apply(lambda date: date.toordinal())
+    except:
+        df['date_ordinal'] = pd.to_datetime(df[ejex],format='%Y/%m/%d').apply(lambda date: date.toordinal())
+
+    x=np.asarray(df['date_ordinal']).reshape(-1,1)
+    y=df[ejey]
+    
+    plt.scatter(x,y)
+
+    # regression transform
+    poly_degree = 3
+    polynomial_features = PolynomialFeatures(degree = poly_degree)
+    x_transform = polynomial_features.fit_transform(x)
+
+    # fit the model
+    model = LinearRegression().fit(x_transform, y)
+    y_new = model.predict(x_transform)
+
+    # calculate rmse and r2
+    rmse = np.sqrt(mean_squared_error(y, y_new))
+    r2 = r2_score(y, y_new)
+    #print('RMSE: ', rmse)
+    #print('R2: ', r2)
+
+    # prediction
+    x_new_min = 0.0
+    x_new_max = fecha_reci
+
+    x_new = np.linspace(x_new_min, x_new_max, fecha_reci)
+    x_new = x_new[:,np.newaxis]
+
+    x_new_transform = polynomial_features.fit_transform(x_new)
+    y_new = model.predict(x_new_transform)
+
+    pred = y_new[np.size(y_new)-1]
+    # plot the prediction
+    plt.plot(x, y, color='coral', linewidth=3)
+    plt.grid()
+    #plt.xlim(x_new_min,x_new_max)
+    plt.ylim(np.min(y),np.max(y))
+    title = 'Degree = {}; RMSE = {}; R2 = {}; Prediccion = {}'.format(poly_degree, round(rmse,2), round(r2,2), round(pred,2))
+    plt.title("Predicciones de casos en todo el mundo \n" + title, fontsize=10)
+    plt.xlabel('Fecha')
+    plt.ylabel('Infectados')
+
+    plt.savefig("static/Reportes/rep21.png")
+
+    plt.close()
+
+    ejex=request.args.get('ejex',None)
+    ejey2=request.args.get('ejey2',None)
+    predi2=request.args.get('predi2',None)
+    #print("Estoy en seleccion")
+    #print(seleccion_rep2)
+    df=pd.DataFrame(contenido_archivo)
+    
+    fecha_dt2 = datetime.strptime(predi2, '%d/%m/%Y')
+    fecha_reci2 = fecha_dt2.toordinal()
+
+    df['date_ordinal'] = pd.to_datetime(df[ejex],format='%d/%m/%Y').apply(lambda date: date.toordinal())
+    x=np.asarray(df['date_ordinal']).reshape(-1,1)
+    y=df[ejey2]
+
+    plt.scatter(x,y)
+
+    # regression transform
+    poly_degree = 3
+    polynomial_features = PolynomialFeatures(degree = poly_degree)
+    x_transform = polynomial_features.fit_transform(x)
+
+    # fit the model
+    model = LinearRegression().fit(x_transform, y)
+    y_new = model.predict(x_transform)
+
+    # calculate rmse and r2
+    rmse = np.sqrt(mean_squared_error(y, y_new))
+    r2 = r2_score(y, y_new)
+    #print('RMSE: ', rmse)
+    #print('R2: ', r2)
+
+    # prediction
+    x_new_min = 0.0
+    x_new_max = fecha_reci2
+
+    x_new = np.linspace(x_new_min, x_new_max, fecha_reci2)
+    x_new = x_new[:,np.newaxis]
+
+    x_new_transform = polynomial_features.fit_transform(x_new)
+    y_new = model.predict(x_new_transform)
+
+    pred2 = y_new[np.size(y_new)-1]
+    # plot the prediction
+    plt.plot(x, y, color='coral', linewidth=3)
+    plt.grid()
+    #plt.xlim(x_new_min,x_new_max)
+    plt.ylim(np.min(y),np.max(y))
+    title = 'Degree = {}; RMSE = {}; R2 = {}; Prediccion = {}'.format(poly_degree, round(rmse,2), round(r2,2), round(pred2,2))
+    plt.title("Predicciones muertes en todo el mundo \n" + title, fontsize=10)
+    plt.xlabel('Fecha')
+    plt.ylabel('Muerte')
+
+    plt.savefig("static/Reportes/rep211.png")
+
+    plt.close()
+
+
+    descripcion = "Actualmente se esta viviendo una situacion a nivel mundial con la enfermedad de Covid-19, en lo cual todos los paises nos hemos vuelto muy suceptibles, por lo cual gracias a las herramientas actuales se puede decir que se ven afectados de manera directa. Por lo cual realizando un analisis de regresion polinomial de grado 3, nos podemos dar cuenta que se tiene un error cuadrático medio de " + str(round(rmse,2)) + " este error medio nos indica la cantidad de de error que tenemos entre los conjuntos de datos " + " de fechas e infecciones que se estan dando en el pais este datos nos ayuda para poder evaluar la tendencia entre dos valores, ahora bien nos podemos dar cuenta que el valor del coeficiente de determinación " + str(round(r2,2)) + " indica que el modelo indica que el modelo explica toda la variabilidad de los datos de respuesta en torno a su media, por lo cual nos podemos dar cuenta que los indices de infeccion y mortalidad solo se van a lograr reducir si todos nos cuidamos y seguimos las medidas precautorias, con lo anterior descrito se sabe que la prediccion de infectados es de: " + str(round(pred,2)) + "y la prediccion de muertes es de: " + str(round(pred2,2))
+    
+
+    #descripcion = "Actualmente se esta viviendo una situacion a nivel mundial con la enfermedad de Covid-19, en lo cual todos los paises nos hemos vuelto muy suceptibles, por lo cual gracias a las herramientas actuales se puede decir que " + seleccion_rep1 + " se ve afectado de manera directa. Por lo cual realizando un analisis de regresion polinomial de grado 3, nos podemos dar cuenta que se tiene un error cuadrático medio de " + str(round(rmse,2)) + " este error medio nos indica la cantidad de de error que tenemos entre los conjuntos de datos " + " de fechas e infecciones que se estan dando en el pais este datos nos ayuda para poder evaluar la tendencia entre dos valores, ahora bien nos podemos dar cuenta que "
+    
+    return render_template("analisis21.html", Encabezados = recorrertitulosExcel(), descripcion = descripcion)
+
+@app.route("/mensajeenviado21/<descripcion>")
+def Mandarmensaje21(descripcion):
+    return render_template('IEEErep21.html', descripcion = descripcion)
 
 
 
