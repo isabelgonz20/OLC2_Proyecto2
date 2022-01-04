@@ -52,26 +52,15 @@ Mediante el procesamiento y análisis de noticias de todos los países del mundo
 
 ![image](IMAGENES/A2.png)
 
-* Consola entrada
-![image](IMAGENES/A3.png)
-
-* Consola salida
-![image](IMAGENES/A4.png)
-
-* Boton cargar archivo: nos sirve para cargar un archivo que tengamos en nuestro sistema.
-![image](IMAGENES/A6.png)
-
-* Boton interpretar: nos sirve para realizar el analisis lexico, sintactico y semantico.
-![image](IMAGENES/A5.png)
-
-* Boton traducir: nos sirve para traducir nuestro codigo a 3D
-![image](IMAGENES/A7.png)
-
-3. Menu de navegacion: nos ayuda a desplazarnos por las diferentes ventanas de la aplicacion.
-* ![image](IMAGENES/A9.png)
+3. Opciones de analisis: Nos muestra un listado con todas las opciones de informe con las que contamos.
+* ![image](IMAGENES/A3.png)
+* ![image](IMAGENES/A4.png)
+* ![image](IMAGENES/A5.png)
+* ![image](IMAGENES/A6.png)
+* ![image](IMAGENES/A7.png)
 * ![image](IMAGENES/A8.png)
 
-4. Ventana que nos muestra el reporte de errores en una tabla.
+4. Manuales: Ventana que nos muestra un boton del manual de usuario y tecnico.
 * ![image](IMAGENES/A10.png)
 
 5. Ventana que nos muestra el reporte de tabla de simbolos.
