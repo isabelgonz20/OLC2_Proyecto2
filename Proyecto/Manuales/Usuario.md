@@ -28,7 +28,7 @@ Aplicar inteligencia artificial para lograr entrenar un modelo, el cual nos ayud
 
 ## Flujo de la aplicación
 ***
-![image](https://github.com/harias25/olc2-diciembre-2021/blob/main/Proyecto%202/imagenes/flujo.png)
+![image](IMAGENES/A14.png)
 
 # Descripcion del sistema
 Durante la emergencia sanitaria provocada por el COVID-19, se ha observado un notable incremento en la aplicación de nuevas tecnologías al campo de la salud y la investigación. Desde la creación de todo tipo de dispositivos inteligentes destinados a detectar el más mínimo síntoma indicativo de contagio, hasta el diseño de nuevos patrones de investigación en la cura del nuevo coronavirus.
@@ -61,21 +61,25 @@ Mediante el procesamiento y análisis de noticias de todos los países del mundo
 * ![image](IMAGENES/A8.png)
 
 4. Manuales: Ventana que nos muestra un boton del manual de usuario y tecnico.
+* ![image](IMAGENES/A9.png)
+
+5. Ventana que nos muestra el titulo y la opcion de ingresar o regresar al inform
 * ![image](IMAGENES/A10.png)
 
-5. Ventana que nos muestra el reporte de tabla de simbolos.
+6. Ventana que nos pedira los datos requeridos para realizar el analisis correspondiente
 * ![image](IMAGENES/A11.png)
 
-6. Ventana que nos muestra el reporte de AST.
+7. Ventana que nos muestra los botones que nos permitiran realizar el analisis o enviarnos a descargar nuestro reporte del analisis correctapondiente.
 * ![image](IMAGENES/A12.png)
 
-7. Ventana que nos muestra los botones que nos redirigen a los distintos manuales que se tienen.
+8. Ventana que nos muestra el reporte en formato IEEE del analisis que hemos realizo, el cual se podra descargar en formato .pdf.
 * ![image](IMAGENES/A13.png)
-* [Reporte Gramatical](https://github.com/Jony198/COMPI2_DICIEMBRE_2021/blob/master/PROYECTO1/Manuales/Gramatica.md): Reporte Gramatical
-* [Definicion dirigida por la sintaxis](https://github.com/Jony198/COMPI2_DICIEMBRE_2021/blob/master/PROYECTO1/Manuales/DirigidaSintaxis.md): Definicion dirigida por la sintaxis
-* [Manual tecnico](https://github.com/Jony198/COMPI2_DICIEMBRE_2021/blob/master/PROYECTO1/Manuales/MTecnico.md): Manual tecnico
-* [Manual Usuario](https://github.com/Jony198/COMPI2_DICIEMBRE_2021/blob/master/PROYECTO1/Manuales/MUsuario.md): Manual Usuario
+
+9. Ventana que nos muestra los botones que nos redirigen a los distintos manuales que se tienen.
+* ![image](IMAGENES/A9.png)
+* [Manual tecnico](https://github.com/isabelgonz20/OLC2_Proyecto2/blob/master/Proyecto/Manuales/Tecnico.md): Manual tecnico
+* [Manual Usuario](https://github.com/isabelgonz20/OLC2_Proyecto2/blob/master/Proyecto/Manuales/Usuario.md): Manual Usuario
 
 # Link pagina
 ***
-* [Pagina web](https://jony198.github.io/COMPI2_DICIEMBRE_2021/): QUETZAL OLC2 2021
+* [Pagina web](http://34.125.68.190:8000/): Coronavirus Data Analysis With Machine Learning
