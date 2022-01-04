@@ -1,6 +1,6 @@
 ### 
 ![Image text](https://i.pinimg.com/originals/e7/94/6c/e7946c7073fc9df995f6047d17125afe.png)
-# **Quetzal OCL2: Manual Técnico**
+# **Coronavirus Data Analysis With Machine Learning**
 
 Escuela de Ciencias y Sistemas
 
@@ -17,22 +17,23 @@ Vacaciones Diciembre de 2021
 
 ## Objetivos
 ***
-Aplicar la fase de sintesis del compilador para lograr realizar un traductor e interprete utilizando herramientas para su analisis:
-* Realizar un analisis lexico y sintactico para construir un traductor.
-* Implementar la ejecucion de dicha traduccion utilizando traduccion dirigida por la sintaxis haciendo uso de atributos heredados y sintetizados.
+Aplicar inteligencia artificial para lograr entrenar un modelo, el cual nos ayude a realizar predicciones a un futuro o sobre la tendencia del coronavirus:
+* Realizar un analisis de tendencias sobre las graficas.
+* Realizar un analisis de regresion sobre las graficas que nos indiquen.
 
 ## Funcionalidad
 ***
-* Interpreta: Esta opción nos va a permitir interpretar una entrada. El programa recibe un archivo de entrada de código de alto nivel y ejecuta las instrucciones.
-* Traducir: Esta opción nos va a permitir traducir una entrada. El programa recibe un archivo de entrada de código de alto nivel y traduce a código intermedio en la sintaxis de tres direcciones.
-* Reportes: Esta opción nos va a permitir visualizar los reportes generados después de traducir una entrada.
+* Interpretar resultados que se pueden obtener sobre las graficas
+* Se requiere la implementación de una Aplicación Web que permita el ánalisis de la información, y con esta poder terminar diferentes parametros de medición y configuración para desplegar gráficas y resultados de forma agradable y de fácil entendimiento para el usuario.
 
 ## Flujo de la aplicación
 ***
-![image](https://raw.githubusercontent.com/harias25/olc2-diciembre-2021/main/Proyecto%201/flujo_quetzal.png)
+![image](IMAGENES/A14.png)
 
 # Descripcion del sistema
-Quetzal es un lenguaje de programación inspirado en C, su característica principal es la inclusión de tipos implícitos. El sistema de tipos de Quetzal realiza una formalización de los tipos de C y Java. Esto permite a los desarrolladores definir variables y funciones tipadas sin perder la esencia. Otra inclusión importante de Quetzal es la simplificación de los lenguajes C y Java para poder realizar diferentes instrucciones en menos pasos.
+Durante la emergencia sanitaria provocada por el COVID-19, se ha observado un notable incremento en la aplicación de nuevas tecnologías al campo de la salud y la investigación. Desde la creación de todo tipo de dispositivos inteligentes destinados a detectar el más mínimo síntoma indicativo de contagio, hasta el diseño de nuevos patrones de investigación en la cura del nuevo coronavirus.
+
+Mediante el procesamiento y análisis de noticias de todos los países del mundo, junto con información relacionada con rutas de vuelos comerciales y brotes de enfermedades, pudieron predecir, no solo la existencia de una enfermedad potencialmente pandémica, sino también el epicentro de la enfermedad. Así mismo, como su trayectoria más inmediata.
 
 # Requerimientos minimos
 > 1. Tener instalado un navegador web.
@@ -76,27 +77,29 @@ A finales de 2010, el proyecto Ace, otro editor de código basado en JavaScript,
 
 ![image](https://user-images.githubusercontent.com/24401039/122161428-ee7e3c80-ce2e-11eb-93ce-af56f75dfe6e.png)
 
-## Jison
+## Flask
 
-Jison es, en escencia, un clone del generador grammatical Bison y Yacc, pero en javascript. Incluye su propio analizador lexico modelado en base a Flex (analizador lexico para JAVA). Fue creado originalmente por Zach Carter para ayudar el estudio de un curso de compiladores.
+En la actualidad existen muchas opciones para crear páginas web y muchos lenguajes (PHP, JAVA), y en este caso Flask nos permite crear de una manera muy sencilla aplicaciones web con Python.
 
-![image](https://user-images.githubusercontent.com/24401039/122161438-f2aa5a00-ce2e-11eb-8d97-3a5044b5aa8f.png)
+Flask es un “micro” Framework escrito en Python y concebido para facilitar el desarrollo de Aplicaciones Web bajo el patrón MVC.
+
+![image](https://blog.tiraquelibras.com/wp-content/uploads/2019/08/Flask.png)
 
 # Comandos de Compilación
 
-Instalacion Jison
+Instalacion scikit-learn
 ```
-npm install jison -g
+pip install -U scikit-learn
 ```
-Para instalar el compilador de typescript, la librería jison y el paquete copyfiles, que sirve para poder copiar, pegar y eliminar archivos en carpetas.
+Para instalar la libreria que nos ayudara a realizar las graficas de las predicciones de nuestros informes. 
 
 ```
-npm run build
+pip install matplotlib
 ```
-Para compilar el codigo de la clase Analizador_Lexico_Sintactico.jison
+Lenguaje de programacion que nos ayudara a programar nuestra aplicacion
 
 ```
-jison Analizador_Lexico_Sintactico.jison
+pip install python
 ```
 
 Instalacion browserify
@@ -104,9 +107,9 @@ Instalacion browserify
 ```
 npm install -g browserify
 ```
-Ejecucion de browserify para union de js.
+Instalacion de flask
 ```
-browserify .\PROYECTO1\ANALIZADOR\Ejecutar.js --standalone load > bundle.js
+pip install Flask
 ```
 
 # Gramaticas realizadas
@@ -562,211 +565,108 @@ graficar_ts			RGRAFICARTS
 ([a-zA-Z_])[a-zA-Z0-9_]*	                Identificador
 ```
 
-# Clases
-> NodoAST.js
+# Archivos principales
+> index.html
 
-> Operacion.js
+> analisis.html
 
-> Funciones.js
+> IEEE.html
 
-> GraficarTs.js
+> iniciorep.html
 
-> Llamadas.js
+> template.py
 
-> Main.js
+> Cargararchivo.py
 
-> Parametros.js
+> Subirarchivo.py
 
-> Print.js
+# Librerias
+>import os
 
-> caracterOfPosition.js
+>from re import X
 
-> Length.js
+>from flask import Flask
 
-> subString.js
+>from flask import request
 
-> ToLower.js
+>from flask import render_template
 
-> ToUpper.js
+>from werkzeug.utils import secure_filename
 
-> TypeOf.js
+>from werkzeug.datastructures import  FileStorage
 
-> Aritmetica.js
+>import matplotlib.pyplot as plt
 
-> Arreglo.js
+>import numpy as np
 
-> Asignacion.js
+>import pandas as pd
 
-> AsignacionArreglo.js
+>from sklearn import linear_model
 
-> AsignacionStruct.js
+>from sklearn.metrics import mean_squared_error, r2_score
 
-> Casteo.js
+>from flask_wtf import FlaskForm 
 
-> Declaracion.js
+>from wtforms import SelectField
 
-> DeclaracionArreglos.js
+>from datetime import date, datetime
 
-> Identificador.js
+>import seaborn as sns
 
-> IncrementoDecremento.js
+>from sklearn.linear_model import LinearRegression  
 
-> Logica.js
+>from sklearn.preprocessing import PolynomialFeatures 
 
-> OperadorTernario.js
-
-> Primitivo.js
-
-> Relacional.js
-
-> Struct.js
-
-> For.js
-
-> While.js
-
-> Case.js
-
-> If.js
-
-> Switch.js
-
-> Break.js
-
-> Continue.js
-
-> Return.js
-
-> Arbol.js
-
-> Error.js
-
-> Simbolo.js
-
-> TablaSimbolos.js
-
-> Tipo.js
-
-> Analizador_Lexico_Sintactico.jison
-
-> Ejecut.js
-
-> Ejecutar.js
-
-> bundlle.js
-
-> index.js
+>from sklearn import preprocessing
 
 # Metodos principales
-* Clase NodoAST: Es la encargada de crear los nodos del arbol abstracto. 
-![image](IMAGENES/M1.png)
+* Uploader: Metodo que se encarga de obtener la ruta del archivo. 
+![image](IMAGENES/A15.png)
 
-* Clase GraficarTS: Es la encargada de graficar la Tabla de simbolos que se genere hasta el momento que se pida.
-![image](IMAGENES/M2.png)
+* Recorrer CSV: Metodo que se encarga de recorrer todos los titulos de nuestro csv
+![image](IMAGENES/A16.png)
 
-* Clase Funcion: Es la encargada de manejar todas las funciones. 
-![image](IMAGENES/M3.png)
+* App: Metodo principal que ejecuta toda la aplicacion 
+![image](IMAGENES/A17.png)
 
-* Clase Main: Es el encargado de ejecutar de manera correcta el programa.
-![image](IMAGENES/M4.png)
-
-* Clase Parametro: Es la encargada de de manejar los parametros que se le envian a las funciones.
-![image](IMAGENES/M5.png)
-
-* Clase Print: Es la encargada del print y el println, asi manejando los diferentes tipos de prints que se tienen.
-![image](IMAGENES/M6.png)
-
-* Clase CaracterOfPosition: Es la clase encargada que devolvera el caracter correspondiente a esa posición indicada.
-![image](IMAGENES/M7.png)
-
-* Clase Length: Es la clase encargada de la obtención del número de elementos de una cadena
-![image](IMAGENES/M8.png)
-
-* Clase ToLower: Es la clase encargada de convertir en minusculas.
-![image](IMAGENES/M9.png)
-
-* Clase Aritmetica
-
-![image](IMAGENES/M10.png)
-
-Entre las operaciones aritmeticas disponibles vamos a encontrar las siguientes:
-
-    - **Suma:** La suma de dos expresiones se define por el símbolo `+` 
-    - **Resta:** La resta de dos expresiones y la negación de una expresión aritmetica se define por el símbolo `-` 
-    - **Multiplicación:** La multiplicación de dos expresiones se define por el símbolo `*` 
-    - **División:** La división de dos expresiones se define por el símbolo `/`
-    - **Modulo:** El modulo entre dos expresiones se define por el símbolo `%` 
-    - **Nativas:** Quetzal posee 6 funciones nativas para la resolución de expresiones, entre ellas se encuentran:
-    - **pow:** Recibe como primer parametro la base y como segundo parametro la potencia a elevar.  Ejemplo: `pow(2,4)`
-    - **sqrt:**  Cálcula la raíz cuadrara de un número Ejemplo: `sqrt(4)`
-    - **sin:** Resuelve la función seno del número que se ingrese
-    - **cos:** Resuelve la función coseno del numero que se ingrese
-    - **tan:** Resuelve la función tangente del numero que se ingrese
-
-* Clase IncrementoDecremento: Es la clase encargada de incrementar y decrementar variables.
-![image](IMAGENES/M11.png)
-
-* Clase Primitivo: 
-
-    ![image](IMAGENES/M12.png)
-
-* Clase For: Es la encargada de repetir una o más instrucciones un determinado número de veces. 
-![image](IMAGENES/M13.png)
-
-* Clase Switch: Es la encargada de control de selección utilizado para permitir que el valor de una variable o expresión cambie el flujo de control de la ejecución del programa mediante búsqueda y mapa.
-
-    ![image](IMAGENES/M14.png)
-
-* Clase Continue: Es la encargada de detener la iteración actual y volver al principio del bucle para realizar otra iteración, si corresponde.
-![image](IMAGENES/M15.png)
-
-* Clase index: Es la clase que tiene todo el codigo html, que es utilizado para mostrar la pagina con sus funcionalidades.
-![image](IMAGENES/M16.png)
 
 # Interfaz
-1. Se cuenta con una pantalla de inicio la cual muestra el nombre del programa QUETZAL OCL2.
+1. Se cuenta con una pantalla de inicio la cual muestra el nombre del programa Coronavirus Data Analysis With Machine Learning
 
 ![image](IMAGENES/A1.png)
 
-2. Se muestran dos consolas donde se podra cargar un archivo para su analisis y en la siguiente consola se muestra el resultado de salida.
+2. Se cuenta con un area de carga de documentos tipo csv, que nos ayudaran a realizar el analisis correspondiente.
 
 ![image](IMAGENES/A2.png)
 
-* Consola entrada
-![image](IMAGENES/A3.png)
-
-* Consola salida
-![image](IMAGENES/A4.png)
-
-* Boton cargar archivo: nos sirve para cargar un archivo que tengamos en nuestro sistema.
-![image](IMAGENES/A6.png)
-
-* Boton interpretar: nos sirve para realizar el analisis lexico, sintactico y semantico.
-![image](IMAGENES/A5.png)
-
-* Boton traducir: nos sirve para traducir nuestro codigo a 3D
-![image](IMAGENES/A7.png)
-
-3. Menu de navegacion: nos ayuda a desplazarnos por las diferentes ventanas de la aplicacion.
-* ![image](IMAGENES/A9.png)
+3. Opciones de analisis: Nos muestra un listado con todas las opciones de informe con las que contamos.
+* ![image](IMAGENES/A3.png)
+* ![image](IMAGENES/A4.png)
+* ![image](IMAGENES/A5.png)
+* ![image](IMAGENES/A6.png)
+* ![image](IMAGENES/A7.png)
 * ![image](IMAGENES/A8.png)
 
-4. Ventana que nos muestra el reporte de errores en una tabla.
+4. Manuales: Ventana que nos muestra un boton del manual de usuario y tecnico.
+* ![image](IMAGENES/A9.png)
+
+5. Ventana que nos muestra el titulo y la opcion de ingresar o regresar al inform
 * ![image](IMAGENES/A10.png)
 
-5. Ventana que nos muestra el reporte de tabla de simbolos.
+6. Ventana que nos pedira los datos requeridos para realizar el analisis correspondiente
 * ![image](IMAGENES/A11.png)
 
-6. Ventana que nos muestra el reporte de AST.
+7. Ventana que nos muestra los botones que nos permitiran realizar el analisis o enviarnos a descargar nuestro reporte del analisis correctapondiente.
 * ![image](IMAGENES/A12.png)
 
-7. Ventana que nos muestra los botones que nos redirigen a los distintos manuales que se tienen.
+8. Ventana que nos muestra el reporte en formato IEEE del analisis que hemos realizo, el cual se podra descargar en formato .pdf.
 * ![image](IMAGENES/A13.png)
-* [Reporte Gramatical](https://github.com/Jony198/COMPI2_DICIEMBRE_2021/blob/master/PROYECTO1/Manuales/Gramatica.md): Reporte Gramatical
-* [Definicion dirigida por la sintaxis](https://github.com/Jony198/COMPI2_DICIEMBRE_2021/blob/master/PROYECTO1/Manuales/DirigidaSintaxis.md): Definicion dirigida por la sintaxis
-* [Manual tecnico](https://github.com/Jony198/COMPI2_DICIEMBRE_2021/blob/master/PROYECTO1/Manuales/MTecnico.md): Manual tecnico
-* [Manual Usuario](https://github.com/Jony198/COMPI2_DICIEMBRE_2021/blob/master/PROYECTO1/Manuales/MUsuario.md): Manual Usuario
+
+9. Ventana que nos muestra los botones que nos redirigen a los distintos manuales que se tienen.
+* ![image](IMAGENES/A9.png)
+* [Manual tecnico](https://github.com/isabelgonz20/OLC2_Proyecto2/blob/master/Proyecto/Manuales/Tecnico.md): Manual tecnico
+* [Manual Usuario](https://github.com/isabelgonz20/OLC2_Proyecto2/blob/master/Proyecto/Manuales/Usuario.md): Manual Usuario
 
 # Link pagina
 ***
-* [Pagina web](https://jony198.github.io/COMPI2_DICIEMBRE_2021/): QUETZAL OLC2 2021
+* [Pagina web](http://34.125.68.190:8000/): Coronavirus Data Analysis With Machine Learning
