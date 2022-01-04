@@ -1,6 +1,7 @@
 #!/usr/bin/python
 # -*- coding: iso-8859-15 -*-
 import os
+from re import X
 from flask import Flask
 from flask import request
 from flask import render_template
@@ -17,11 +18,12 @@ from datetime import date, datetime
 import seaborn as sns
 from sklearn.linear_model import LinearRegression  
 from sklearn.preprocessing import PolynomialFeatures 
+from sklearn import preprocessing
 
 nombre_archivito = ""
 
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder='Templates')
 app. config['UPLOAD_FOLDER'] = "./Archivos"
 @app.route('/')
 def index():
@@ -2103,6 +2105,137 @@ def Reporte22():
 def Mandarmensaje22(descripcion):
     return render_template('IEEErep22.html', descripcion = descripcion)
 
+#______________________________________________Reporte 23______________________________________________________
+#---------------------------------Factores de muerte por COVID-19 en un país.--------------------																									------
+@app.route('/iniciorep23')
+def pagina67():
+    return render_template('iniciorep23.html')
+
+@app.route('/iniciorep23/regresionlineal23')
+def pagina68():
+    return render_template('analisis23.html', Encabezados = recorrertitulosExcel())
+
+@app.route('/iniciorep23/regresionlineal23/reporte23')
+def pagina69():
+    return render_template('IEEErep23.html')
+
+@app.route("/rep23")
+def Reporte23():
+    global nombre_archivito
+    contenido_archivo = pd.read_csv("Archivos/" + nombre_archivito)
+    ejex=request.args.get('ejex',None)
+    ejey=request.args.get('ejey',None)
+    pais=request.args.get('pais',None)
+    seleccion_rep1=request.args.get('seleccion_rep1',None)
+    
+    df  = pd.DataFrame(contenido_archivo)
+    df3=df[df[pais]==seleccion_rep1].groupby([ejex], as_index=False).agg({ejey: "sum"})
+    #le = preprocessing.LabelEncoder()
+
+    x=np.asarray(df3[ejex].index.tolist()).reshape(-1,1)
+    y=df3[ejey]
+
+    #print("Probando que lleva outlook_encoded")
+    #outlook_encoded=le.fit_transform(x)
+    #outlook_encoded.array.reshape(-1, 1)
+    #print(outlook_encoded)
+    #nuevax = df3
+    #print("Este es mi nueva x")
+    #print(nuevax)
+    #print("esta es una nueva x")
+    #print("tIPO X")
+    #print(type(y))
+
+    plt.scatter(x,y)
+
+    tamano_x = 0
+    tamano_y = 0
+    porcentaje = 0.0
+
+    #print("este es el tamanio de x")
+    #tamano_x = np.size(x)
+    #print(tamano_x)
+    #print(x)
+    #print("esta es la suma de x")
+    #tamano_y = np.sum(x)
+    #print(tamano_y)
+
+    #porcentaje = tamano_y/tamano_x
+
+    #print("El porcentajes es de: ")
+    #print(porcentaje)
+
+    # regression transform
+    poly_degree = 3
+    polynomial_features = PolynomialFeatures(degree = poly_degree)
+    x_transform = polynomial_features.fit_transform(x)
+
+    # fit the model
+    model = LinearRegression().fit(x_transform, y)
+    y_new = model.predict(x_transform)
+
+    # calculate rmse and r2
+    rmse = np.sqrt(mean_squared_error(y, y_new))
+    r2 = r2_score(y, y_new)
+    #print('RMSE: ', rmse)
+    #print('R2: ', r2)
+
+    # prediction
+    x_new_min = 0.0
+    x_new_max = 50.0
+
+    x_new = np.linspace(x_new_min, x_new_max, 50)
+    x_new = x_new[:,np.newaxis]
+
+    x_new_transform = polynomial_features.fit_transform(x_new)
+    y_new = model.predict(x_new_transform)
+
+    pend = model.coef_[np.size(model.coef_)-1]
+    # plot the prediction
+    plt.plot(x, y, color='coral', linewidth=3)
+    plt.grid()
+    #plt.xlim(x_new_min,x_new_max)
+    plt.ylim(np.min(y),np.max(y))
+    title = 'Degree = {}; RMSE = {}; R2 = {};'.format(poly_degree, round(rmse,2), round(r2,2))
+    plt.title("Factores de muerte por COVID-19 en un país.\n " + title, fontsize=10)
+    plt.xlabel('Factores')
+    plt.ylabel('Muertes')
+
+    plt.savefig("static/Reportes/rep23.png")
+
+    plt.close()
+    descripcion = ""
+
+    if(pend > 0):
+        if(r2 < 0.25):
+            descripcion = "Actualmente se esta viviendo una situacion a nivel mundial con la enfermedad de Covid-19, en lo cual todos los paises nos hemos vuelto muy suceptibles, por lo cual gracias a las herramientas actuales se puede decir que " + "los paises " + " se ven afectados de manera directa. Por lo cual realizando un analisis de regresion polinomial de grado 3, nos podemos dar cuenta que se tiene un error cuadratico medio de " + str(round(rmse,2)) + " este error medio nos indica la cantidad de de error que tenemos entre los conjuntos de datos " + " de fechas e infecciones que se estan dando en el pais este datos nos ayuda para poder evaluar la tendencia entre dos valores, ahora bien nos podemos dar cuenta que el valor del coeficiente de determinación " + str(round(r2,2)) + " indica que el modelo no explica ninguna porción de la variabilidad de los datos de respuesta en torno a su media es decir que los datos en este caso no se encuentran correlacionados ya que estan muy alejados de 1." + "Con un indice de progresion positivo de " + str(pend) 
+        elif(r2 < 0.5):
+            descripcion = "Actualmente se esta viviendo una situacion a nivel mundial con la enfermedad de Covid-19, en lo cual todos los paises nos hemos vuelto muy suceptibles, por lo cual gracias a las herramientas actuales se puede decir que " + "los paises " + " se ve afectados de manera directa. Por lo cual realizando un analisis de regresion polinomial de grado 3, nos podemos dar cuenta que se tiene un error cuadratico medio de " + str(round(rmse,2)) + " este error medio nos indica la cantidad de de error que tenemos entre los conjuntos de datos " + " de fechas e infecciones que se estan dando en el pais este datos nos ayuda para poder evaluar la tendencia entre dos valores, ahora bien nos podemos dar cuenta que el valor del coeficiente de determinación " + str(round(r2,2)) + " indica que el modelo no explica ninguna porción de la variabilidad de los datos de respuesta en torno a su media es decir que los datos en este caso casi no se encuentran correlacionados ya que estan muy alejados de 1." + "Con un indice de progresion positivo de " + str(pend) 
+        elif(r2 < 0.75):
+            descripcion = "Actualmente se esta viviendo una situacion a nivel mundial con la enfermedad de Covid-19, en lo cual todos los paises nos hemos vuelto muy suceptibles, por lo cual gracias a las herramientas actuales se puede decir que " + "los paises " + " se ve afectados de manera directa. Por lo cual realizando un analisis de regresion polinomial de grado 3, nos podemos dar cuenta que se tiene un error cuadratico medio de " + str(round(rmse,2)) + " este error medio nos indica la cantidad de de error que tenemos entre los conjuntos de datos " + " de fechas e infecciones que se estan dando en el pais este datos nos ayuda para poder evaluar la tendencia entre dos valores, ahora bien nos podemos dar cuenta que el valor del coeficiente de determinación " + str(round(r2,2)) + " indica que el modelo medio explica la porción de la variabilidad de los datos de respuesta en torno a su media es decir que los datos en este caso se encuentran un poco correlacionados ya que no estan muy alejados de 1." + "Con un indice de progresion positivo de " + str(pend) 
+        elif(r2 >= 0.75):
+            descripcion = "Actualmente se esta viviendo una situacion a nivel mundial con la enfermedad de Covid-19, en lo cual todos los paises nos hemos vuelto muy suceptibles, por lo cual gracias a las herramientas actuales se puede decir que " + "los paises " + " se ve afectados de manera directa. Por lo cual realizando un analisis de regresion polinomial de grado 3, nos podemos dar cuenta que se tiene un error cuadratico medio de " + str(round(rmse,2)) + " este error medio nos indica la cantidad de de error que tenemos entre los conjuntos de datos " + " de fechas e infecciones que se estan dando en el pais este datos nos ayuda para poder evaluar la tendencia entre dos valores, ahora bien nos podemos dar cuenta que el valor del coeficiente de determinación " + str(round(r2,2)) + " indica que el modelo indica que el modelo explica toda la variabilidad de los datos de respuesta en torno a su media es decir que los datos en este caso se encuentran correlacionados ya que estan muy cercanos a 1." + "Con un indice de progresion positivo de " + str(pend) 
+    elif(pend <= 0):
+        if(r2 < 0.25):
+            descripcion = "Actualmente se esta viviendo una situacion a nivel mundial con la enfermedad de Covid-19, en lo cual todos los paises nos hemos vuelto muy suceptibles, por lo cual gracias a las herramientas actuales se puede decir que " + "los paises " + " se ven afectados de manera directa. Por lo cual realizando un analisis de regresion polinomial de grado 3, nos podemos dar cuenta que se tiene un error cuadratico medio de " + str(round(rmse,2)) + " este error medio nos indica la cantidad de de error que tenemos entre los conjuntos de datos " + " de fechas e infecciones que se estan dando en el pais este datos nos ayuda para poder evaluar la tendencia entre dos valores, ahora bien nos podemos dar cuenta que el valor del coeficiente de determinación " + str(round(r2,2)) + " indica que el modelo no explica ninguna porción de la variabilidad de los datos de respuesta en torno a su media es decir que los datos en este caso no se encuentran correlacionados ya que estan muy alejados de 1." + "Con un indice de progresion negativo de " + str(pend)  
+        elif(r2 < 0.5):
+            descripcion = "Actualmente se esta viviendo una situacion a nivel mundial con la enfermedad de Covid-19, en lo cual todos los paises nos hemos vuelto muy suceptibles, por lo cual gracias a las herramientas actuales se puede decir que " + "los paises " + " se ve afectados de manera directa. Por lo cual realizando un analisis de regresion polinomial de grado 3, nos podemos dar cuenta que se tiene un error cuadratico medio de " + str(round(rmse,2)) + " este error medio nos indica la cantidad de de error que tenemos entre los conjuntos de datos " + " de fechas e infecciones que se estan dando en el pais este datos nos ayuda para poder evaluar la tendencia entre dos valores, ahora bien nos podemos dar cuenta que el valor del coeficiente de determinación " + str(round(r2,2)) + " indica que el modelo no explica ninguna porción de la variabilidad de los datos de respuesta en torno a su media es decir que los datos en este caso casi no se encuentran correlacionados ya que estan muy alejados de 1." + "Con un indice de progresion negativo de " + str(pend) 
+        elif(r2 < 0.75):
+            descripcion = "Actualmente se esta viviendo una situacion a nivel mundial con la enfermedad de Covid-19, en lo cual todos los paises nos hemos vuelto muy suceptibles, por lo cual gracias a las herramientas actuales se puede decir que " + "los paises " + " se ve afectados de manera directa. Por lo cual realizando un analisis de regresion polinomial de grado 3, nos podemos dar cuenta que se tiene un error cuadratico medio de " + str(round(rmse,2)) + " este error medio nos indica la cantidad de de error que tenemos entre los conjuntos de datos " + " de fechas e infecciones que se estan dando en el pais este datos nos ayuda para poder evaluar la tendencia entre dos valores, ahora bien nos podemos dar cuenta que el valor del coeficiente de determinación " + str(round(r2,2)) + " indica que el modelo medio explica la porción de la variabilidad de los datos de respuesta en torno a su media es decir que los datos en este caso se encuentran un poco correlacionados ya que no estan muy alejados de 1." + "Con un indice de progresion negativo de " + str(pend) 
+        elif(r2 >= 0.75):
+            descripcion = "Actualmente se esta viviendo una situacion a nivel mundial con la enfermedad de Covid-19, en lo cual todos los paises nos hemos vuelto muy suceptibles, por lo cual gracias a las herramientas actuales se puede decir que " + "los paises " + " se ve afectados de manera directa. Por lo cual realizando un analisis de regresion polinomial de grado 3, nos podemos dar cuenta que se tiene un error cuadratico medio de " + str(round(rmse,2)) + " este error medio nos indica la cantidad de de error que tenemos entre los conjuntos de datos " + " de fechas e infecciones que se estan dando en el pais este datos nos ayuda para poder evaluar la tendencia entre dos valores, ahora bien nos podemos dar cuenta que el valor del coeficiente de determinación " + str(round(r2,2)) + " indica que el modelo indica que el modelo explica toda la variabilidad de los datos de respuesta en torno a su media es decir que los datos en este caso se encuentran correlacionados ya que estan muy cercanos a 1." + "Con un indice de progresion negativo de " + str(pend) 
+        
+    #descripcion = "Actualmente se esta viviendo una situacion a nivel mundial con la enfermedad de Covid-19, en lo cual todos los paises nos hemos vuelto muy suceptibles, por lo cual gracias a las herramientas actuales se puede decir que " + seleccion_rep1 + " se ve afectado de manera directa. Por lo cual realizando un analisis de regresion polinomial de grado 3, nos podemos dar cuenta que se tiene un error cuadratico medio de " + str(round(rmse,2)) + " este error medio nos indica la cantidad de de error que tenemos entre los conjuntos de datos " + " de fechas e infecciones que se estan dando en el pais este datos nos ayuda para poder evaluar la tendencia entre dos valores, ahora bien nos podemos dar cuenta que "
+    
+    return render_template("analisis23.html", Encabezados = recorrertitulosExcel(), descripcion = descripcion)
+
+@app.route("/mensajeenviado23/<descripcion>")
+def Mandarmensaje23(descripcion):
+    return render_template('IEEErep23.html', descripcion = descripcion)
+
+
+
+
 
 #______________________________________________Reporte 24______________________________________________________
 #--------------Comparación entre el número de casos detectados y el número de pruebas de un país.--------------
@@ -2432,8 +2565,6 @@ def recorrertitulosExcel():
         encabezados.append(titulo)
     #print(encabezados)
     return encabezados
-
-
 
 
 if __name__ == '__main__':
