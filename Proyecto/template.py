@@ -1,5 +1,6 @@
 #!/usr/bin/python
 # -*- coding: iso-8859-15 -*-
+
 import os
 from re import X
 from flask import Flask
@@ -19,12 +20,14 @@ import seaborn as sns
 from sklearn.linear_model import LinearRegression  
 from sklearn.preprocessing import PolynomialFeatures 
 from sklearn import preprocessing
+from flask import flash
 
 nombre_archivito = ""
 
 
 app = Flask(__name__, template_folder='Templates')
 app. config['UPLOAD_FOLDER'] = "./Archivos"
+app.secret_key = "abc"
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -46,8 +49,7 @@ def pagina3():
 
 @app.route("/rep1")
 def Reporte1():
-    global nombre_archivito
-    contenido_archivo = pd.read_csv("Archivos/" + nombre_archivito)
+    contenido_archivo = tipoextencion()
     ejex=request.args.get('ejex',None)
     ejey=request.args.get('ejey',None)
     pais=request.args.get('pais',None)
@@ -62,10 +64,20 @@ def Reporte1():
     try:
         df3['date_ordinal'] = pd.to_datetime(df3[ejex],format='%d/%m/%Y').apply(lambda date: date.toordinal())
     except:
-        df3['date_ordinal'] = pd.to_datetime(df3[ejex],format='%Y/%m/%d').apply(lambda date: date.toordinal())
+        try:
+            df3['date_ordinal'] = pd.to_datetime(df3[ejex],format='%Y/%m/%d').apply(lambda date: date.toordinal())
+        except:
+            try:
+                df3['date_ordinal'] = pd.to_datetime(df3[ejex],format='%d-%m-%Y').apply(lambda date: date.toordinal())
+            except:
+                df3['date_ordinal'] = pd.to_datetime(df3[ejex],format='%Y-%m-%d').apply(lambda date: date.toordinal())
     
     x=np.asarray(df3['date_ordinal']).reshape(-1,1)
     y=df3[ejey]
+
+    if(np.size(y) == 0):
+        flash("No se encontraron datos en el registro")
+        return render_template("analisis1.html", Encabezados = recorrertitulosExcel(), descripcion = '')
 
     plt.scatter(x,y)
 
@@ -143,8 +155,7 @@ def pagina6():
 
 @app.route("/rep2")
 def Reporte2():
-    global nombre_archivito
-    contenido_archivo = pd.read_csv("Archivos/" + nombre_archivito)
+    contenido_archivo = tipoextencion()
     ejex=request.args.get('ejex',None)
     ejey=request.args.get('ejey',None)
     pais=request.args.get('pais',None)
@@ -167,13 +178,23 @@ def Reporte2():
     try:
         df3['date_ordinal'] = pd.to_datetime(df3[ejex],format='%d/%m/%Y').apply(lambda date: date.toordinal())
     except:
-        df3['date_ordinal'] = pd.to_datetime(df3[ejex],format='%Y/%m/%d').apply(lambda date: date.toordinal())
-
+        try:
+            df3['date_ordinal'] = pd.to_datetime(df3[ejex],format='%Y/%m/%d').apply(lambda date: date.toordinal())
+        except:
+            try:
+                df3['date_ordinal'] = pd.to_datetime(df3[ejex],format='%d-%m-%Y').apply(lambda date: date.toordinal())
+            except:
+                df3['date_ordinal'] = pd.to_datetime(df3[ejex],format='%Y-%m-%d').apply(lambda date: date.toordinal())
 
     #predi = datetime.date(str(predi)).toordinal()
     
     x=np.asarray(df3['date_ordinal']).reshape(-1,1)
     y=df3[ejey]
+
+    if(np.size(y) == 0):
+        flash("No se encontraron datos en el registro")
+        return render_template("analisis2.html", Encabezados = recorrertitulosExcel(), descripcion = '')
+
 
     plt.scatter(x,y)
 
@@ -254,9 +275,7 @@ def pagina9():
 
 @app.route("/rep3")
 def Reporte3():
-    global nombre_archivito
-    print("estoy antes de la 253")
-    contenido_archivo = pd.read_csv("Archivos/" + nombre_archivito)
+    contenido_archivo = tipoextencion()
     ejex=request.args.get('ejex',None)
     ejey=request.args.get('ejey',None)
     print("antes de la 255")
@@ -276,14 +295,24 @@ def Reporte3():
     try:
         df3['date_ordinal'] = pd.to_datetime(df3[ejex],format='%d/%m/%Y').apply(lambda date: date.toordinal())
     except:
-        df3['date_ordinal'] = pd.to_datetime(df3[ejex],format='%Y/%m/%d').apply(lambda date: date.toordinal())
-    
+        try:
+            df3['date_ordinal'] = pd.to_datetime(df3[ejex],format='%Y/%m/%d').apply(lambda date: date.toordinal())
+        except:
+            try:
+                df3['date_ordinal'] = pd.to_datetime(df3[ejex],format='%d-%m-%Y').apply(lambda date: date.toordinal())
+            except:
+                df3['date_ordinal'] = pd.to_datetime(df3[ejex],format='%Y-%m-%d').apply(lambda date: date.toordinal())
     
 
     #predi = datetime.date(str(predi)).toordinal()
     
     x=np.asarray(df3['date_ordinal']).reshape(-1,1)
     y=df3[ejey]
+
+    if(np.size(y) == 0):
+        flash("No se encontraron datos en el registro")
+        return render_template("analisis3.html", Encabezados = recorrertitulosExcel(), descripcion = '')
+
 
     print(y)
 
@@ -376,8 +405,7 @@ def pagina12():
 
 @app.route("/rep4")
 def Reporte4():
-    global nombre_archivito
-    contenido_archivo = pd.read_csv("Archivos/" + nombre_archivito)
+    contenido_archivo = tipoextencion()
     ejex=request.args.get('ejex',None)
     ejey=request.args.get('ejey',None)
     pais=request.args.get('pais',None)
@@ -400,12 +428,23 @@ def Reporte4():
     try:
         df3['date_ordinal'] = pd.to_datetime(df3[ejex],format='%d/%m/%Y').apply(lambda date: date.toordinal())
     except:
-        df3['date_ordinal'] = pd.to_datetime(df3[ejex],format='%Y/%m/%d').apply(lambda date: date.toordinal())
+        try:
+            df3['date_ordinal'] = pd.to_datetime(df3[ejex],format='%Y/%m/%d').apply(lambda date: date.toordinal())
+        except:
+            try:
+                df3['date_ordinal'] = pd.to_datetime(df3[ejex],format='%d-%m-%Y').apply(lambda date: date.toordinal())
+            except:
+                df3['date_ordinal'] = pd.to_datetime(df3[ejex],format='%Y-%m-%d').apply(lambda date: date.toordinal())
 
     #predi = datetime.date(str(predi)).toordinal()
     
     x=np.asarray(df3['date_ordinal']).reshape(-1,1)
     y=df3[ejey]
+
+    if(np.size(y) == 0):
+        flash("No se encontraron datos en el registro")
+        return render_template("analisis4.html", Encabezados = recorrertitulosExcel(), descripcion = '')
+
 
     plt.scatter(x,y)
 
@@ -485,8 +524,7 @@ def pagina15():
 
 @app.route("/rep5")
 def Reporte5():
-    global nombre_archivito
-    contenido_archivo = pd.read_csv("Archivos/" + nombre_archivito)
+    contenido_archivo = tipoextencion()
     ejex=request.args.get('ejex',None)
     ejey=request.args.get('ejey',None)
     pais=request.args.get('pais',None)
@@ -508,12 +546,23 @@ def Reporte5():
     try:
         df3['date_ordinal'] = pd.to_datetime(df3[ejex],format='%d/%m/%Y').apply(lambda date: date.toordinal())
     except:
-        df3['date_ordinal'] = pd.to_datetime(df3[ejex],format='%Y/%m/%d').apply(lambda date: date.toordinal())
+        try:
+            df3['date_ordinal'] = pd.to_datetime(df3[ejex],format='%Y/%m/%d').apply(lambda date: date.toordinal())
+        except:
+            try:
+                df3['date_ordinal'] = pd.to_datetime(df3[ejex],format='%d-%m-%Y').apply(lambda date: date.toordinal())
+            except:
+                df3['date_ordinal'] = pd.to_datetime(df3[ejex],format='%Y-%m-%d').apply(lambda date: date.toordinal())
 
     #predi = datetime.date(str(predi)).toordinal()
     
     x=np.asarray(df3['date_ordinal']).reshape(-1,1)
     y=df3[ejey]
+
+    if(np.size(y) == 0):
+        flash("No se encontraron datos en el registro")
+        return render_template("analisis5.html", Encabezados = recorrertitulosExcel(), descripcion = '')
+
 
     plt.scatter(x,y)
 
@@ -593,8 +642,7 @@ def pagina18():
 
 @app.route("/rep6")
 def Reporte6():
-    global nombre_archivito
-    contenido_archivo = pd.read_csv("Archivos/" + nombre_archivito)
+    contenido_archivo = tipoextencion()
     ejex=request.args.get('ejex',None)
     ejey=request.args.get('ejey',None)
     pais=request.args.get('pais',None)
@@ -613,15 +661,27 @@ def Reporte6():
     #fecha_reci = fecha_dt.toordinal()
     #fechita = int(fecha_dt.strftime("%d%m%Y"))
     #print(fechita)
+
     try:
         df3['date_ordinal'] = pd.to_datetime(df3[ejex],format='%d/%m/%Y').apply(lambda date: date.toordinal())
     except:
-        df3['date_ordinal'] = pd.to_datetime(df3[ejex],format='%Y/%m/%d').apply(lambda date: date.toordinal())
+        try:
+            df3['date_ordinal'] = pd.to_datetime(df3[ejex],format='%Y/%m/%d').apply(lambda date: date.toordinal())
+        except:
+            try:
+                df3['date_ordinal'] = pd.to_datetime(df3[ejex],format='%d-%m-%Y').apply(lambda date: date.toordinal())
+            except:
+                df3['date_ordinal'] = pd.to_datetime(df3[ejex],format='%Y-%m-%d').apply(lambda date: date.toordinal())
 
     #predi = datetime.date(str(predi)).toordinal()
     
     x=np.asarray(df3['date_ordinal']).reshape(-1,1)
     y=df3[ejey]
+
+    if(np.size(y) == 0):
+        flash("No se encontraron datos en el registro")
+        return render_template("analisis6.html", Encabezados = recorrertitulosExcel(), descripcion = '')
+
 
     plt.scatter(x,y)
 
@@ -701,8 +761,7 @@ def pagina21():
 
 @app.route("/rep7")
 def Reporte7():
-    global nombre_archivito
-    contenido_archivo = pd.read_csv("Archivos/" + nombre_archivito)
+    contenido_archivo = tipoextencion()
     ejex=request.args.get('ejex',None)
     ejey=request.args.get('ejey',None)
     pais=request.args.get('pais',None)
@@ -715,10 +774,20 @@ def Reporte7():
     try:
         df3['date_ordinal'] = pd.to_datetime(df3[ejex],format='%d/%m/%Y').apply(lambda date: date.toordinal())
     except:
-        df3['date_ordinal'] = pd.to_datetime(df3[ejex],format='%Y/%m/%d').apply(lambda date: date.toordinal())
+        try:
+            df3['date_ordinal'] = pd.to_datetime(df3[ejex],format='%Y/%m/%d').apply(lambda date: date.toordinal())
+        except:
+            try:
+                df3['date_ordinal'] = pd.to_datetime(df3[ejex],format='%d-%m-%Y').apply(lambda date: date.toordinal())
+            except:
+                df3['date_ordinal'] = pd.to_datetime(df3[ejex],format='%Y-%m-%d').apply(lambda date: date.toordinal())
 
     x=np.asarray(df3['date_ordinal']).reshape(-1,1)
     y=df3[ejey]
+    if(np.size(y) == 0):
+        flash("No se encontraron datos en el registro")
+        return render_template("analisis7.html", Encabezados = recorrertitulosExcel(), descripcion = '')
+
 
     plt.scatter(x,y)
 
@@ -797,8 +866,7 @@ def pagina27():
 
 @app.route("/rep9")
 def Reporte9():
-    global nombre_archivito
-    contenido_archivo = pd.read_csv("Archivos/" + nombre_archivito)
+    contenido_archivo = tipoextencion()
     ejex=request.args.get('ejex',None)
     ejey=request.args.get('ejey',None)
     pais=request.args.get('pais',None)
@@ -808,13 +876,24 @@ def Reporte9():
     df = df.dropna(subset=[ejey])
 
     df3=df[df[pais]==seleccion_rep1].groupby([ejex], as_index=False).agg({ejey: "sum"})
+
     try:
         df3['date_ordinal'] = pd.to_datetime(df3[ejex],format='%d/%m/%Y').apply(lambda date: date.toordinal())
     except:
-        df3['date_ordinal'] = pd.to_datetime(df3[ejex],format='%Y/%m/%d').apply(lambda date: date.toordinal())
-    
+        try:
+            df3['date_ordinal'] = pd.to_datetime(df3[ejex],format='%Y/%m/%d').apply(lambda date: date.toordinal())
+        except:
+            try:
+                df3['date_ordinal'] = pd.to_datetime(df3[ejex],format='%d-%m-%Y').apply(lambda date: date.toordinal())
+            except:
+                df3['date_ordinal'] = pd.to_datetime(df3[ejex],format='%Y-%m-%d').apply(lambda date: date.toordinal())
+
     x=np.asarray(df3['date_ordinal']).reshape(-1,1)
     y=df3[ejey]
+    if(np.size(y) == 0):
+        flash("No se encontraron datos en el registro")
+        return render_template("analisis9.html", Encabezados = recorrertitulosExcel(), descripcion = '')
+
 
     plt.scatter(x,y)
 
@@ -892,8 +971,7 @@ def pagina30():
 
 @app.route("/rep10")
 def Reporte10():
-    global nombre_archivito
-    contenido_archivo = pd.read_csv("Archivos/" + nombre_archivito)
+    contenido_archivo = tipoextencion()
     ejex=request.args.get('ejex',None)
     ejey=request.args.get('ejey',None)
     pais=request.args.get('pais',None)
@@ -903,14 +981,26 @@ def Reporte10():
     df = df.dropna(subset=[ejey])
 
     df3=df[df[pais]==seleccion_rep1].groupby([ejex], as_index=False).agg({ejey: "sum"})
+
     try:
         df3['date_ordinal'] = pd.to_datetime(df3[ejex],format='%d/%m/%Y').apply(lambda date: date.toordinal())
     except:
-        df3['date_ordinal'] = pd.to_datetime(df3[ejex],format='%Y/%m/%d').apply(lambda date: date.toordinal())
-    
+        try:
+            df3['date_ordinal'] = pd.to_datetime(df3[ejex],format='%Y/%m/%d').apply(lambda date: date.toordinal())
+        except:
+            try:
+                df3['date_ordinal'] = pd.to_datetime(df3[ejex],format='%d-%m-%Y').apply(lambda date: date.toordinal())
+            except:
+                df3['date_ordinal'] = pd.to_datetime(df3[ejex],format='%Y-%m-%d').apply(lambda date: date.toordinal())
+
+
     x=np.asarray(df3['date_ordinal']).reshape(-1,1)
     y=df3[ejey]
-    
+
+    if(np.size(y) == 0):
+        flash("No se encontraron datos en el registro")
+        return render_template("analisis10.html", Encabezados = recorrertitulosExcel(), descripcion = '')
+
     plt.scatter(x,y)
 
     # regression transform
@@ -1035,8 +1125,7 @@ def pagina63():
 
 @app.route("/rep11")
 def Reporte11():
-    global nombre_archivito
-    contenido_archivo = pd.read_csv("Archivos/" + nombre_archivito)
+    contenido_archivo = tipoextencion()
     ejex=request.args.get('ejex',None)
     ejey=request.args.get('ejey',None)
     pais=request.args.get('pais',None)
@@ -1048,6 +1137,10 @@ def Reporte11():
 
     x=np.asarray(df[df[pais]==seleccion_rep1][ejex]).reshape(-1,1)
     y=df[df[pais]==seleccion_rep1][ejey]
+    if(np.size(y) == 0):
+        flash("No se encontraron datos en el registro")
+        return render_template("analisis11.html", Encabezados = recorrertitulosExcel(), descripcion = '')
+
 
     plt.scatter(x,y)
 
@@ -1152,8 +1245,7 @@ def pagina72():
 
 @app.route("/rep12")
 def Reporte12():
-    global nombre_archivito
-    contenido_archivo = pd.read_csv("Archivos/" + nombre_archivito)
+    contenido_archivo = tipoextencion()
     ejex=request.args.get('ejex',None)
     ejey=request.args.get('ejey',None)
     pais=request.args.get('pais',None)
@@ -1163,14 +1255,24 @@ def Reporte12():
     df = df.dropna(subset=[ejey])
 
     df3=df[df[pais]==seleccion_rep1].groupby([ejex], as_index=False).agg({ejey: "sum"})
+
     try:
         df3['date_ordinal'] = pd.to_datetime(df3[ejex],format='%d/%m/%Y').apply(lambda date: date.toordinal())
     except:
-        df3['date_ordinal'] = pd.to_datetime(df3[ejex],format='%Y/%m/%d').apply(lambda date: date.toordinal())
-    
+        try:
+            df3['date_ordinal'] = pd.to_datetime(df3[ejex],format='%Y/%m/%d').apply(lambda date: date.toordinal())
+        except:
+            try:
+                df3['date_ordinal'] = pd.to_datetime(df3[ejex],format='%d-%m-%Y').apply(lambda date: date.toordinal())
+            except:
+                df3['date_ordinal'] = pd.to_datetime(df3[ejex],format='%Y-%m-%d').apply(lambda date: date.toordinal())
+
     x=np.asarray(df3['date_ordinal']).reshape(-1,1)
     y=df3[ejey]
-    
+    if(np.size(y) == 0):
+        flash("No se encontraron datos en el registro")
+        return render_template("analisis12.html", Encabezados = recorrertitulosExcel(), descripcion = '')
+
     plt.scatter(x,y)
 
     # regression transform
@@ -1354,8 +1456,7 @@ def pagina66():
 
 @app.route("/rep13")
 def Reporte13():
-    global nombre_archivito
-    contenido_archivo = pd.read_csv("Archivos/" + nombre_archivito)
+    contenido_archivo = tipoextencion()
     ejex=request.args.get('ejex',None)
     ejey=request.args.get('ejey',None)
     pais=request.args.get('pais',None)
@@ -1373,6 +1474,10 @@ def Reporte13():
     
     x=np.asarray(df3[ejex]).reshape(-1,1)
     y=df3[ejey]
+    if(np.size(y) == 0):
+        flash("No se encontraron datos en el registro")
+        return render_template("analisis13.html", Encabezados = recorrertitulosExcel(), descripcion = '')
+
 
     plt.scatter(x,y)
 
@@ -1478,8 +1583,7 @@ def pagina33():
 
 @app.route("/rep14")
 def Reporte14():
-    global nombre_archivito
-    contenido_archivo = pd.read_csv("Archivos/" + nombre_archivito)
+    contenido_archivo = tipoextencion()
     ejex=request.args.get('ejex',None)
     ejey=request.args.get('ejey',None)
     pais=request.args.get('pais',None)
@@ -1490,13 +1594,25 @@ def Reporte14():
     df = df.dropna(subset=[ejey])
 
     df3=df[df[pais]==seleccion_rep1].groupby([ejex], as_index=False).agg({ejey: "sum"})
+
     try:
         df3['date_ordinal'] = pd.to_datetime(df3[ejex],format='%d/%m/%Y').apply(lambda date: date.toordinal())
     except:
-        df3['date_ordinal'] = pd.to_datetime(df3[ejex],format='%Y/%m/%d').apply(lambda date: date.toordinal())
-    
+        try:
+            df3['date_ordinal'] = pd.to_datetime(df3[ejex],format='%Y/%m/%d').apply(lambda date: date.toordinal())
+        except:
+            try:
+                df3['date_ordinal'] = pd.to_datetime(df3[ejex],format='%d-%m-%Y').apply(lambda date: date.toordinal())
+            except:
+                df3['date_ordinal'] = pd.to_datetime(df3[ejex],format='%Y-%m-%d').apply(lambda date: date.toordinal())
+
     x=np.asarray(df3['date_ordinal']).reshape(-1,1)
     y=df3[ejey]
+
+    if(np.size(y) == 0):
+        flash("No se encontraron datos en el registro")
+        return render_template("analisis14.html", Encabezados = recorrertitulosExcel(), descripcion = '')
+
 
     plt.scatter(x,y)
 
@@ -1576,8 +1692,7 @@ def pagina36():
 
 @app.route("/rep15")
 def Reporte15():
-    global nombre_archivito
-    contenido_archivo = pd.read_csv("Archivos/" + nombre_archivito)
+    contenido_archivo = tipoextencion()
     ejex=request.args.get('ejex',None)
     ejey=request.args.get('ejey',None)
     pais=request.args.get('pais',None)
@@ -1587,14 +1702,24 @@ def Reporte15():
     df = df.dropna(subset=[ejey])
 
     df3=df[df[pais]==seleccion_rep1].groupby([ejex], as_index=False).agg({ejey: "sum"})
+
     try:
         df3['date_ordinal'] = pd.to_datetime(df3[ejex],format='%d/%m/%Y').apply(lambda date: date.toordinal())
     except:
-        df3['date_ordinal'] = pd.to_datetime(df3[ejex],format='%Y/%m/%d').apply(lambda date: date.toordinal())
-    
+        try:
+            df3['date_ordinal'] = pd.to_datetime(df3[ejex],format='%Y/%m/%d').apply(lambda date: date.toordinal())
+        except:
+            try:
+                df3['date_ordinal'] = pd.to_datetime(df3[ejex],format='%d-%m-%Y').apply(lambda date: date.toordinal())
+            except:
+                df3['date_ordinal'] = pd.to_datetime(df3[ejex],format='%Y-%m-%d').apply(lambda date: date.toordinal())
+
     x=np.asarray(df3['date_ordinal']).reshape(-1,1)
     y=df3[ejey]
 
+    if(np.size(y) == 0):
+        flash("No se encontraron datos en el registro")
+        return render_template("analisis15.html", Encabezados = recorrertitulosExcel(), descripcion = '')
 
     plt.scatter(x,y)
 
@@ -1672,8 +1797,7 @@ def pagina60():
 
 @app.route("/rep16")
 def Reporte16():
-    global nombre_archivito
-    contenido_archivo = pd.read_csv("Archivos/" + nombre_archivito)
+    contenido_archivo = tipoextencion()
     ejex=request.args.get('ejex',None)
     ejey=request.args.get('ejey',None)
     pais=request.args.get('pais',None)
@@ -1687,6 +1811,10 @@ def Reporte16():
 
     x=np.asarray(df3[ejex]).reshape(-1,1)
     y=df3[ejey]
+
+    if(np.size(y) == 0):
+        flash("No se encontraron datos en el registro")
+        return render_template("analisis16.html", Encabezados = recorrertitulosExcel(), descripcion = '')
 
     plt.scatter(x,y)
 
@@ -1791,8 +1919,7 @@ def pagina39():
 
 @app.route("/rep17")
 def Reporte17():
-    global nombre_archivito
-    contenido_archivo = pd.read_csv("Archivos/" + nombre_archivito)
+    contenido_archivo = tipoextencion()
     ejex=request.args.get('ejex',None)
     ejey=request.args.get('ejey',None)
     pais=request.args.get('pais',None)
@@ -1806,6 +1933,11 @@ def Reporte17():
 
     x=np.asarray(df3[ejex]).reshape(-1,1)
     y=df3[ejey]
+
+    if(np.size(y) == 0):
+        flash("No se encontraron datos en el registro")
+        return render_template("analisis17.html", Encabezados = recorrertitulosExcel(), descripcion = '')
+
 
     plt.scatter(x,y)
 
@@ -1894,8 +2026,7 @@ def pagina42():
 
 @app.route("/rep19")
 def Reporte19():
-    global nombre_archivito
-    contenido_archivo = pd.read_csv("Archivos/" + nombre_archivito)
+    contenido_archivo = tipoextencion()
     ejex=request.args.get('ejex',None)
     ejey=request.args.get('ejey',None)
     pais=request.args.get('pais',None)
@@ -1918,13 +2049,24 @@ def Reporte19():
     df = df.dropna(subset=[ejey])
 
     df3=df[df[pais]==seleccion_rep1].groupby([ejex], as_index=False).agg({ejey: "sum"})
+
     try:
         df3['date_ordinal'] = pd.to_datetime(df3[ejex],format='%d/%m/%Y').apply(lambda date: date.toordinal())
     except:
-        df3['date_ordinal'] = pd.to_datetime(df3[ejex],format='%Y/%m/%d').apply(lambda date: date.toordinal())
-    
+        try:
+            df3['date_ordinal'] = pd.to_datetime(df3[ejex],format='%Y/%m/%d').apply(lambda date: date.toordinal())
+        except:
+            try:
+                df3['date_ordinal'] = pd.to_datetime(df3[ejex],format='%d-%m-%Y').apply(lambda date: date.toordinal())
+            except:
+                df3['date_ordinal'] = pd.to_datetime(df3[ejex],format='%Y-%m-%d').apply(lambda date: date.toordinal())
+
     x=np.asarray(df3['date_ordinal']).reshape(-1,1)
     y=df3[ejey]
+
+    if(np.size(y) == 0):
+        flash("No se encontraron datos en el registro")
+        return render_template("analisis19.html", Encabezados = recorrertitulosExcel(), descripcion = '')
 
 
     plt.scatter(x,y)
@@ -2006,8 +2148,7 @@ def pagina45():
 
 @app.route("/rep20")
 def Reporte20():
-    global nombre_archivito
-    contenido_archivo = pd.read_csv("Archivos/" + nombre_archivito)
+    contenido_archivo = tipoextencion()
     ejex=request.args.get('ejex',None)
     ejey=request.args.get('ejey',None)
     #pais=request.args.get('pais',None)
@@ -2018,15 +2159,25 @@ def Reporte20():
     df = df.dropna(subset=[ejey])
 
     df3=df.groupby([ejex], as_index=False).agg({ejey: "sum"})
+
     try:
         df3['date_ordinal'] = pd.to_datetime(df3[ejex],format='%d/%m/%Y').apply(lambda date: date.toordinal())
     except:
-        df3['date_ordinal'] = pd.to_datetime(df3[ejex],format='%Y/%m/%d').apply(lambda date: date.toordinal())
-    
+        try:
+            df3['date_ordinal'] = pd.to_datetime(df3[ejex],format='%Y/%m/%d').apply(lambda date: date.toordinal())
+        except:
+            try:
+                df3['date_ordinal'] = pd.to_datetime(df3[ejex],format='%d-%m-%Y').apply(lambda date: date.toordinal())
+            except:
+                df3['date_ordinal'] = pd.to_datetime(df3[ejex],format='%Y-%m-%d').apply(lambda date: date.toordinal())
+
     x=np.asarray(df3['date_ordinal']).reshape(-1,1)
     y=df3[ejey]
-
     
+    if(np.size(y) == 0):
+        flash("No se encontraron datos en el registro")
+        return render_template("analisis20.html", Encabezados = recorrertitulosExcel(), descripcion = '')
+
     plt.scatter(x,y)
 
     # regression transform
@@ -2163,8 +2314,7 @@ def pagina48():
 
 @app.route("/rep21")
 def Reporte21():
-    global nombre_archivito
-    contenido_archivo = pd.read_csv("Archivos/" + nombre_archivito)
+    contenido_archivo = tipoextencion()
     ejex=request.args.get('ejex',None)
     ejey=request.args.get('ejey',None)
     predi=request.args.get('predi',None)
@@ -2179,13 +2329,24 @@ def Reporte21():
     df = df.dropna(subset=[ejey])
 
     df3=df.groupby([ejex], as_index=False).agg({ejey: "sum"})
+
     try:
         df3['date_ordinal'] = pd.to_datetime(df3[ejex],format='%d/%m/%Y').apply(lambda date: date.toordinal())
     except:
-        df3['date_ordinal'] = pd.to_datetime(df3[ejex],format='%Y/%m/%d').apply(lambda date: date.toordinal())
-    
+        try:
+            df3['date_ordinal'] = pd.to_datetime(df3[ejex],format='%Y/%m/%d').apply(lambda date: date.toordinal())
+        except:
+            try:
+                df3['date_ordinal'] = pd.to_datetime(df3[ejex],format='%d-%m-%Y').apply(lambda date: date.toordinal())
+            except:
+                df3['date_ordinal'] = pd.to_datetime(df3[ejex],format='%Y-%m-%d').apply(lambda date: date.toordinal())
+
     x=np.asarray(df3['date_ordinal']).reshape(-1,1)
     y=df3[ejey]
+
+    if(np.size(y) == 0):
+        flash("No se encontraron datos en el registro")
+        return render_template("analisis21.html", Encabezados = recorrertitulosExcel(), descripcion = '')
 
     
     plt.scatter(x,y)
@@ -2323,8 +2484,7 @@ def pagina51():
 
 @app.route("/rep22")
 def Reporte22():
-    global nombre_archivito
-    contenido_archivo = pd.read_csv("Archivos/" + nombre_archivito)
+    contenido_archivo = tipoextencion()
     ejex=request.args.get('ejex',None)
     ejey=request.args.get('ejey',None)
     pais=request.args.get('pais',None)
@@ -2335,13 +2495,25 @@ def Reporte22():
     df = df.dropna(subset=[ejey])
 
     df3=df[df[pais]==seleccion_rep1].groupby([ejex], as_index=False).agg({ejey: "sum"})
+
     try:
         df3['date_ordinal'] = pd.to_datetime(df3[ejex],format='%d/%m/%Y').apply(lambda date: date.toordinal())
     except:
-        df3['date_ordinal'] = pd.to_datetime(df3[ejex],format='%Y/%m/%d').apply(lambda date: date.toordinal())
-    
+        try:
+            df3['date_ordinal'] = pd.to_datetime(df3[ejex],format='%Y/%m/%d').apply(lambda date: date.toordinal())
+        except:
+            try:
+                df3['date_ordinal'] = pd.to_datetime(df3[ejex],format='%d-%m-%Y').apply(lambda date: date.toordinal())
+            except:
+                df3['date_ordinal'] = pd.to_datetime(df3[ejex],format='%Y-%m-%d').apply(lambda date: date.toordinal())
+
+
     x=np.asarray(df3['date_ordinal']).reshape(-1,1)
     y=df3[ejey]
+
+    if(np.size(y) == 0):
+        flash("No se encontraron datos en el registro")
+        return render_template("analisis22.html", Encabezados = recorrertitulosExcel(), descripcion = '')
 
 
     plt.scatter(x,y)
@@ -2421,8 +2593,7 @@ def pagina69():
 
 @app.route("/rep23")
 def Reporte23():
-    global nombre_archivito
-    contenido_archivo = pd.read_csv("Archivos/" + nombre_archivito)
+    contenido_archivo = tipoextencion()
     ejex=request.args.get('ejex',None)
     ejey=request.args.get('ejey',None)
     pais=request.args.get('pais',None)
@@ -2436,6 +2607,10 @@ def Reporte23():
 
     x=np.asarray(df3[ejex]).reshape(-1,1)
     y=df3[ejey]
+
+    if(np.size(y) == 0):
+        flash("No se encontraron datos en el registro")
+        return render_template("analisis23.html", Encabezados = recorrertitulosExcel(), descripcion = '')
 
     #print("Probando que lleva outlook_encoded")
     #outlook_encoded=le.fit_transform(x)
@@ -2553,8 +2728,7 @@ def pagina54():
 
 @app.route("/rep24")
 def Reporte24():
-    global nombre_archivito
-    contenido_archivo = pd.read_csv("Archivos/" + nombre_archivito)
+    contenido_archivo = tipoextencion()
     ejex=request.args.get('ejex',None)
     ejey=request.args.get('ejey',None)
     pais=request.args.get('pais',None)
@@ -2565,13 +2739,24 @@ def Reporte24():
     df = df.dropna(subset=[ejey])
 
     df3=df[df[pais]==seleccion_rep1].groupby([ejex], as_index=False).agg({ejey: "sum"})
+
     try:
         df3['date_ordinal'] = pd.to_datetime(df3[ejex],format='%d/%m/%Y').apply(lambda date: date.toordinal())
     except:
-        df3['date_ordinal'] = pd.to_datetime(df3[ejex],format='%Y/%m/%d').apply(lambda date: date.toordinal())
+        try:
+            df3['date_ordinal'] = pd.to_datetime(df3[ejex],format='%Y/%m/%d').apply(lambda date: date.toordinal())
+        except:
+            try:
+                df3['date_ordinal'] = pd.to_datetime(df3[ejex],format='%d-%m-%Y').apply(lambda date: date.toordinal())
+            except:
+                df3['date_ordinal'] = pd.to_datetime(df3[ejex],format='%Y-%m-%d').apply(lambda date: date.toordinal())
     
     x=np.asarray(df3['date_ordinal']).reshape(-1,1)
     y=df3[ejey]
+
+    if(np.size(y) == 0):
+        flash("No se encontraron datos en el registro")
+        return render_template("analisis24.html", Encabezados = recorrertitulosExcel(), descripcion = '')
 
     
     plt.scatter(x,y)
@@ -2702,8 +2887,7 @@ def pagina57():
 
 @app.route("/rep25")
 def Reporte25():
-    global nombre_archivito
-    contenido_archivo = pd.read_csv("Archivos/" + nombre_archivito)
+    contenido_archivo = tipoextencion()
     ejex=request.args.get('ejex',None)
     ejey=request.args.get('ejey',None)
     pais=request.args.get('pais',None)
@@ -2726,13 +2910,24 @@ def Reporte25():
     df = df.dropna(subset=[ejey])
 
     df3=df[df[pais]==seleccion_rep1].groupby([ejex], as_index=False).agg({ejey: "sum"})
+
     try:
         df3['date_ordinal'] = pd.to_datetime(df3[ejex],format='%d/%m/%Y').apply(lambda date: date.toordinal())
     except:
-        df3['date_ordinal'] = pd.to_datetime(df3[ejex],format='%Y/%m/%d').apply(lambda date: date.toordinal())
-    
+        try:
+            df3['date_ordinal'] = pd.to_datetime(df3[ejex],format='%Y/%m/%d').apply(lambda date: date.toordinal())
+        except:
+            try:
+                df3['date_ordinal'] = pd.to_datetime(df3[ejex],format='%d-%m-%Y').apply(lambda date: date.toordinal())
+            except:
+                df3['date_ordinal'] = pd.to_datetime(df3[ejex],format='%Y-%m-%d').apply(lambda date: date.toordinal())
+
     x=np.asarray(df3['date_ordinal']).reshape(-1,1)
     y=df3[ejey]
+
+    if(np.size(y) == 0):
+        flash("No se encontraron datos en el registro")
+        return render_template("analisis25.html", Encabezados = recorrertitulosExcel(), descripcion = '')
 
 
     plt.scatter(x,y)
@@ -2867,14 +3062,29 @@ def uploader():
         f.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
         global nombre_archivito
         nombre_archivito = filename
+        #print("estoy entrando a uploader")
+        #tipoextencion()
         #recorrertitulosExcel(filename)
         #Refresionlineal_prediccion(filename)
 
         return render_template('index.html')
 
+def tipoextencion():
+    global nombre_archivito
+    reciberut, extencion =  os.path.splitext(nombre_archivito) 
+    
+    if(extencion == ".csv"):
+        return pd.read_csv("Archivos/" + nombre_archivito)
+    elif(extencion == ".xls"):
+        return pd.read_excel("Archivos/" + nombre_archivito)
+    elif(extencion == ".xlsx"):
+        return pd.read_excel("Archivos/" + nombre_archivito)
+    elif(extencion == ".json"):
+        return pd.read_json("Archivos/" + nombre_archivito, orient='records')
+
 def recorrertitulosExcel():
     global nombre_archivito
-    df = pd.read_csv("Archivos/" + nombre_archivito)
+    df = tipoextencion()
     encabezados =[]
     for titulo in pd.DataFrame(df):
         encabezados.append(titulo)

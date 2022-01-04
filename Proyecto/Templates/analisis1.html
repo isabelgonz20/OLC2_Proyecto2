@@ -13,7 +13,16 @@
 </head>
 
 <body>
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    {% for message in messages %}
+    <script>
+        alert("{{ message }}");
+    </script>
 
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
     <header class="header" id="inicio">
         <img class="hamburguer" src="{{url_for('static', filename = 'img/hamburguesa.svg')}}" alt="">
         <nav class="menu-navegacion">
@@ -85,7 +94,8 @@
                             </td>
                             <td>
                                 <br>
-                                <input type="text" id="name" name="name" required minlength="1" maxlength="20" size="20">
+                                <input type="text" id="name" name="name" required minlength="1" maxlength="20"
+                                    size="20">
                             </td>
                         </tr>
                         <tr>
@@ -139,7 +149,7 @@
                     </form>
 
                     <form action="/mensajeenviado1/{{descripcion}}" style="display:inline">
-                        <button  class="raise" > Reporte IEEE</button>
+                        <button class="raise"> Reporte IEEE</button>
                     </form>
 
                     </p>
@@ -179,7 +189,7 @@
             var ruta = "/rep1?ejex=" + ejex + "&ejey=" + ejey + "&pais=" + pais + "&seleccion_rep1=" + seleccion_rep1;
             //console.log(predi);
             return location.href = ruta;
-            
+
         }
     </script>
 </body>
