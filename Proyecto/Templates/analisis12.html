@@ -48,7 +48,7 @@
     <main>
         <section class="gallery1" id="galeria">
             <div class="contenedor">
-                <h2 class="subtitulo">Ánalisis Comparativo de Vacunación entre 2 paises</h2>
+                <h2 class="subtitulo">Ánalisis Comparativo de Vacunación entre 2 o mas paises</h2>
                 <br><br>
                 <center>
                     <table class="default">
@@ -58,6 +58,7 @@
                             <th>Seleccione columna de paises &nbsp; &nbsp; &nbsp;</th>
                             <th>Ingrese el nombre del pais 1:</th>
                             <th>Ingrese el nombre del pais 2:</th>
+                            <th>Ingrese el nombre del pais 3:</th>
                         </tr>
                         <tr>
                             <td>
@@ -92,6 +93,10 @@
                                 <br>
                                 <input type="text" id="name2" name="name" required minlength="1" maxlength="20" size="20">
                             </td>
+                            <td>
+                                <br>
+                                <input type="text" id="name3" name="name" required minlength="1" maxlength="20" size="20">
+                            </td>
                         </tr>
                         <tr>
                             <th></th>
@@ -119,8 +124,9 @@
                             <th></th>
                         </tr>
                     </table>
-                    <img src="{{url_for('static', filename = 'Reportes/rep10.png')}}">
-                    <img src="{{url_for('static', filename = 'Reportes/rep101.png')}}">
+                    <img src="{{url_for('static', filename = 'Reportes/rep12.png')}}">
+                    <img src="{{url_for('static', filename = 'Reportes/rep121.png')}}">
+                    <img src="{{url_for('static', filename = 'Reportes/rep122.png')}}">
 
                 </center>
 
@@ -144,7 +150,7 @@
                         <button type="button" class="raise" onclick="nombreejes10()"> Predecir</button>
                     </form>
 
-                    <form action="/mensajeenviado10/{{descripcion}}" style="display:inline">
+                    <form action="/mensajeenviado12/{{descripcion}}" style="display:inline">
                         <button  class="raise" > Reporte IEEE</button>
                     </form>
 
@@ -180,10 +186,11 @@
             //var predi = document.getElementById("name").value;
             var seleccion_rep1 = document.getElementById("name").value;
             var seleccion_rep2 = document.getElementById("name2").value;
+            var seleccion_rep3 = document.getElementById("name3").value;
             var ejey = document.getElementById("ejey").value;
             var pais = document.getElementById("pais").value;
 
-            var ruta = "/rep10?ejex=" + ejex + "&ejey=" + ejey + "&pais=" + pais + "&seleccion_rep1=" + seleccion_rep1 + "&seleccion_rep2=" + seleccion_rep2;
+            var ruta = "/rep12?ejex=" + ejex + "&ejey=" + ejey + "&pais=" + pais + "&seleccion_rep1=" + seleccion_rep1 + "&seleccion_rep2=" + seleccion_rep2 +  "&seleccion_rep3=" + seleccion_rep3;
             //console.log(predi);
             return location.href = ruta;       
             

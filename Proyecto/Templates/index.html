@@ -196,10 +196,12 @@
                                 paises
                                 o continentes</h3>
                             <div class="buttons">
-                                &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-                                &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-                                &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-                                <button class="raise1" type="submit">Analizar</button>
+                                <form action="/iniciorep12">
+                                    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                                    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                                    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                                    <button class="raise" type="submit">Analizar</button>
+                                </form>
                             </div>
                         </div>
                         <div class="service">
@@ -369,47 +371,36 @@
                 </div>
         </section>
 
-        <section class="gallery1" id="galeria">
-            <div class="contenedor">
-                <h2 class="subtitulo">Galeria</h2>
-                <div class="contenedor-galeria">
-                    <img src="{{url_for('static', filename = 'img/uno.jpg')}}" class="img-galeria" alt="Hola">
-                    <img src="{{url_for('static', filename = 'img/dos.jpg')}}" class="img-galeria" alt="">
-                    <img src="{{url_for('static', filename = 'img/tres.jpg')}}" class="img-galeria" alt="">
-                    <img src="{{url_for('static', filename = 'img/cuatro.jpg')}}" class="img-galeria" alt="">
-                    <img src="{{url_for('static', filename = 'img/cinco.jpg')}}" class="img-galeria" alt="">
-                    <img src="{{url_for('static', filename = 'img/seis.jpg')}}" class="img-galeria" alt="">
-                </div>
-            </div>
-        </section>
         <div class="imagen-light">
             <img src="{{url_for('static', filename = 'img/close.svg')}}" alt="" class="close">
             <img src="" alt="" class="agregar-imagen">
         </div>
         <section class="contenedor" id="expertos">
-            <h2 class="subtitulo">Expertos en:</h2>
-            <section class="experts">
-                <div class="cont-expert">
-                    <img src="{{url_for('static', filename = 'img/pie_chart.svg')}}" alt="">
-                    <h3 class="n-expert">Analytics</h3>
-                </div>
-                <div class="cont-expert">
-                    <img src="{{url_for('static', filename = 'img/search_engine.svg')}}" alt="">
-                    <h3 class="n-expert">SEO</h3>
-                </div>
-                <div class="cont-expert">
-                    <img src="{{url_for('static', filename = 'img/security.svg')}}" alt="">
-                    <h3 class="n-expert">Security</h3>
-                </div>
-            </section>
+            <h2 class="subtitulo"><b>Manuales</b></h2>
+            <center>
+                <p align="center">
+                <form
+                    action="https://github.com/Jony198/COMPI2_DICIEMBRE_2021/blob/master/PROYECTO1/Manuales/MUsuario.md"
+                    style="display:inline">
+                    <span lang="es">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>
+                    <button class="offset">Manual usuario</button>
+                </form>
+                <form
+                    action="https://github.com/Jony198/COMPI2_DICIEMBRE_2021/blob/master/PROYECTO1/Manuales/MTecnico.md"
+                    style="display:inline">
+                    <span lang="es">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>
+                    <button class="offset">Manual Tecnico</button>
+                </form>
+                </p>
+            </center>
         </section>
     </main>
 
     <footer id="footer">
         <div class="contenedor footer-content">
             <div class="contact-us">
-                <h2 class="brand">AlexCG Design</h2>
-                <p>Somos expertos en la creación de tus sueños</p>
+                <h2 class="brand">Lenguajes y Compiladores 2</h2>
+                <p>Ana Isabel Culajay Gonzalez 201602790</p>
             </div>
         </div>
         <div class="line"></div>

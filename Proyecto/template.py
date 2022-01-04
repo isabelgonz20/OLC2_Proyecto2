@@ -53,14 +53,19 @@ def Reporte1():
     pais=request.args.get('pais',None)
     seleccion_rep1=request.args.get('seleccion_rep1',None)
     df=pd.DataFrame(contenido_archivo)
-    
+    df = df.dropna(subset=[ejex])
+    df = df.dropna(subset=[ejey])
+    df3=df[df[pais]==seleccion_rep1].groupby([ejex], as_index=False).agg({ejey: "sum"})
+
+
+
     try:
-        df['date_ordinal'] = pd.to_datetime(df[df[pais]==seleccion_rep1][ejex],format='%d/%m/%Y').apply(lambda date: date.toordinal())
+        df3['date_ordinal'] = pd.to_datetime(df3[ejex],format='%d/%m/%Y').apply(lambda date: date.toordinal())
     except:
-        df['date_ordinal'] = pd.to_datetime(df[df[pais]==seleccion_rep1][ejex],format='%Y/%m/%d').apply(lambda date: date.toordinal())
+        df3['date_ordinal'] = pd.to_datetime(df3[ejex],format='%Y/%m/%d').apply(lambda date: date.toordinal())
     
-    x=np.asarray(df[df[pais]==seleccion_rep1]['date_ordinal']).reshape(-1,1)
-    y=df[df[pais]==seleccion_rep1][ejey]
+    x=np.asarray(df3['date_ordinal']).reshape(-1,1)
+    y=df3[ejey]
 
     plt.scatter(x,y)
 
@@ -146,12 +151,13 @@ def Reporte2():
     seleccion_rep1=request.args.get('seleccion_rep1',None)
     predi=request.args.get('predi',None)
     df=pd.DataFrame(contenido_archivo)
-    
+    df = df.dropna(subset=[ejex])
+    df = df.dropna(subset=[ejey])
     #diapredi = int(predi)
     ##print(diapredi)
     #diapredi2 = ord(diapredi)
     #print(diapredi2)
-
+    df3=df[df[pais]==seleccion_rep1].groupby([ejex], as_index=False).agg({ejey: "sum"})
     fecha_dt = datetime.strptime(predi, '%d/%m/%Y')
     fecha_reci = fecha_dt.toordinal()
     #fechita = int(fecha_dt.strftime("%Y%m%d"))
@@ -159,15 +165,15 @@ def Reporte2():
     #print(fechita)
 
     try:
-        df['date_ordinal'] = pd.to_datetime(df[df[pais]==seleccion_rep1][ejex],format='%d/%m/%Y').apply(lambda date: date.toordinal())
+        df3['date_ordinal'] = pd.to_datetime(df3[ejex],format='%d/%m/%Y').apply(lambda date: date.toordinal())
     except:
-        df['date_ordinal'] = pd.to_datetime(df[df[pais]==seleccion_rep1][ejex],format='%Y/%m/%d').apply(lambda date: date.toordinal())
+        df3['date_ordinal'] = pd.to_datetime(df3[ejex],format='%Y/%m/%d').apply(lambda date: date.toordinal())
 
 
     #predi = datetime.date(str(predi)).toordinal()
     
-    x=np.asarray(df[df[pais]==seleccion_rep1]['date_ordinal']).reshape(-1,1)
-    y=df[df[pais]==seleccion_rep1][ejey]
+    x=np.asarray(df3['date_ordinal']).reshape(-1,1)
+    y=df3[ejey]
 
     plt.scatter(x,y)
 
@@ -249,11 +255,17 @@ def pagina9():
 @app.route("/rep3")
 def Reporte3():
     global nombre_archivito
+    print("estoy antes de la 253")
     contenido_archivo = pd.read_csv("Archivos/" + nombre_archivito)
     ejex=request.args.get('ejex',None)
     ejey=request.args.get('ejey',None)
+    print("antes de la 255")
     df=pd.DataFrame(contenido_archivo)
-    
+    df =df.dropna(subset=[ejey])
+    df = df.dropna(subset=[ejex])
+    df = df.dropna(subset=[ejey])
+    df3=df.groupby([ejex], as_index=False).agg({ejey: "sum"})
+    print(ejey)
     #diapredi = int(predi)
     ##print(diapredi)
     #diapredi2 = ord(diapredi)
@@ -262,16 +274,18 @@ def Reporte3():
     #fechita = int(fecha_dt.strftime("%d%m%Y"))
     #print(fechita)
     try:
-        df['date_ordinal'] = pd.to_datetime(df[ejex],format='%d/%m/%Y').apply(lambda date: date.toordinal())
+        df3['date_ordinal'] = pd.to_datetime(df3[ejex],format='%d/%m/%Y').apply(lambda date: date.toordinal())
     except:
-        df['date_ordinal'] = pd.to_datetime(df[ejex],format='%Y/%m/%d').apply(lambda date: date.toordinal())
+        df3['date_ordinal'] = pd.to_datetime(df3[ejex],format='%Y/%m/%d').apply(lambda date: date.toordinal())
     
     
 
     #predi = datetime.date(str(predi)).toordinal()
     
-    x=np.asarray(df['date_ordinal']).reshape(-1,1)
-    y=df[ejey]
+    x=np.asarray(df3['date_ordinal']).reshape(-1,1)
+    y=df3[ejey]
+
+    print(y)
 
     plt.scatter(x,y)
 
@@ -370,7 +384,9 @@ def Reporte4():
     seleccion_rep1=request.args.get('seleccion_rep1',None)
     predi=request.args.get('predi',None)
     df=pd.DataFrame(contenido_archivo)
-    
+    df = df.dropna(subset=[ejex])
+    df = df.dropna(subset=[ejey])
+    df3=df[df[pais]==seleccion_rep1].groupby([ejex], as_index=False).agg({ejey: "sum"})
     #diapredi = int(predi)
     ##print(diapredi)
     #diapredi2 = ord(diapredi)
@@ -382,14 +398,14 @@ def Reporte4():
     #print(fechita)
 
     try:
-        df['date_ordinal'] = pd.to_datetime(df[df[pais]==seleccion_rep1][ejex],format='%d/%m/%Y').apply(lambda date: date.toordinal())
+        df3['date_ordinal'] = pd.to_datetime(df3[ejex],format='%d/%m/%Y').apply(lambda date: date.toordinal())
     except:
-        df['date_ordinal'] = pd.to_datetime(df[df[pais]==seleccion_rep1][ejex],format='%Y/%m/%d').apply(lambda date: date.toordinal())
+        df3['date_ordinal'] = pd.to_datetime(df3[ejex],format='%Y/%m/%d').apply(lambda date: date.toordinal())
 
     #predi = datetime.date(str(predi)).toordinal()
     
-    x=np.asarray(df[df[pais]==seleccion_rep1]['date_ordinal']).reshape(-1,1)
-    y=df[df[pais]==seleccion_rep1][ejey]
+    x=np.asarray(df3['date_ordinal']).reshape(-1,1)
+    y=df3[ejey]
 
     plt.scatter(x,y)
 
@@ -426,9 +442,9 @@ def Reporte4():
     #plt.xlim(x_new_min,x_new_max)
     plt.ylim(np.min(y),np.max(y))
     title = 'Degree = {}; RMSE = {}; R2 = {}; Prediccion = {}'.format(poly_degree, round(rmse,2), round(r2,2), round(pred,2))
-    plt.title("Predicción de Infectados en un País\n " + title, fontsize=10)
+    plt.title("Predicción de mortalidad por COVID en un Departamento.\n " + title, fontsize=10)
     plt.xlabel('Fecha')
-    plt.ylabel('Infectados')
+    plt.ylabel('Mortalidad')
 
     plt.savefig("static/Reportes/rep4.png")
     
@@ -477,7 +493,9 @@ def Reporte5():
     seleccion_rep1=request.args.get('seleccion_rep1',None)
     predi=request.args.get('predi',None)
     df=pd.DataFrame(contenido_archivo)
-    
+    df = df.dropna(subset=[ejex])
+    df = df.dropna(subset=[ejey])
+    df3=df[df[pais]==seleccion_rep1].groupby([ejex], as_index=False).agg({ejey: "sum"})
     #diapredi = int(predi)
     ##print(diapredi)
     #diapredi2 = ord(diapredi)
@@ -488,14 +506,14 @@ def Reporte5():
     #fechita = int(fecha_dt.strftime("%d%m%Y"))
     #print(fechita)
     try:
-        df['date_ordinal'] = pd.to_datetime(df[df[pais]==seleccion_rep1][ejex],format='%d/%m/%Y').apply(lambda date: date.toordinal())
+        df3['date_ordinal'] = pd.to_datetime(df3[ejex],format='%d/%m/%Y').apply(lambda date: date.toordinal())
     except:
-        df['date_ordinal'] = pd.to_datetime(df[df[pais]==seleccion_rep1][ejex],format='%Y/%m/%d').apply(lambda date: date.toordinal())
+        df3['date_ordinal'] = pd.to_datetime(df3[ejex],format='%Y/%m/%d').apply(lambda date: date.toordinal())
 
     #predi = datetime.date(str(predi)).toordinal()
     
-    x=np.asarray(df[df[pais]==seleccion_rep1]['date_ordinal']).reshape(-1,1)
-    y=df[df[pais]==seleccion_rep1][ejey]
+    x=np.asarray(df3['date_ordinal']).reshape(-1,1)
+    y=df3[ejey]
 
     plt.scatter(x,y)
 
@@ -532,9 +550,9 @@ def Reporte5():
     #plt.xlim(x_new_min,x_new_max)
     plt.ylim(np.min(y),np.max(y))
     title = 'Degree = {}; RMSE = {}; R2 = {}; Prediccion = {}'.format(poly_degree, round(rmse,2), round(r2,2), round(pred,2))
-    plt.title("Predicción de Infectados en un País\n " + title, fontsize=10)
+    plt.title("Predicción de mortalidad por COVID en un País\n " + title, fontsize=10)
     plt.xlabel('Fecha')
-    plt.ylabel('Infectados')
+    plt.ylabel('Mortaliad')
 
     plt.savefig("static/Reportes/rep5.png")
     
@@ -583,7 +601,9 @@ def Reporte6():
     seleccion_rep1=request.args.get('seleccion_rep1',None)
     #predi=request.args.get('predi',None)
     df=pd.DataFrame(contenido_archivo)
-    
+    df = df.dropna(subset=[ejex])
+    df = df.dropna(subset=[ejey])
+    df3=df[df[pais]==seleccion_rep1].groupby([ejex], as_index=False).agg({ejey: "sum"})
     #diapredi = int(predi)
     ##print(diapredi)
     #diapredi2 = ord(diapredi)
@@ -594,14 +614,14 @@ def Reporte6():
     #fechita = int(fecha_dt.strftime("%d%m%Y"))
     #print(fechita)
     try:
-        df['date_ordinal'] = pd.to_datetime(df[df[pais]==seleccion_rep1][ejex],format='%d/%m/%Y').apply(lambda date: date.toordinal())
+        df3['date_ordinal'] = pd.to_datetime(df3[ejex],format='%d/%m/%Y').apply(lambda date: date.toordinal())
     except:
-        df['date_ordinal'] = pd.to_datetime(df[df[pais]==seleccion_rep1][ejex],format='%Y/%m/%d').apply(lambda date: date.toordinal())
+        df3['date_ordinal'] = pd.to_datetime(df3[ejex],format='%Y/%m/%d').apply(lambda date: date.toordinal())
 
     #predi = datetime.date(str(predi)).toordinal()
     
-    x=np.asarray(df[df[pais]==seleccion_rep1]['date_ordinal']).reshape(-1,1)
-    y=df[df[pais]==seleccion_rep1][ejey]
+    x=np.asarray(df3['date_ordinal']).reshape(-1,1)
+    y=df3[ejey]
 
     plt.scatter(x,y)
 
@@ -640,7 +660,7 @@ def Reporte6():
     title = 'Degree = {}; RMSE = {}; R2 = {}'.format(poly_degree, round(rmse,2), round(r2,2))
     plt.title("Análisis del número de muertes por coronavirus en un País\n " + title, fontsize=10)
     plt.xlabel('Fecha')
-    plt.ylabel('Infectados')
+    plt.ylabel('Muertes')
 
     plt.savefig("static/Reportes/rep6.png")
     
@@ -688,14 +708,17 @@ def Reporte7():
     pais=request.args.get('pais',None)
     seleccion_rep1=request.args.get('seleccion_rep1',None)
     df=pd.DataFrame(contenido_archivo)
-    
-    try:
-        df['date_ordinal'] = pd.to_datetime(df[df[pais]==seleccion_rep1][ejex],format='%d/%m/%Y').apply(lambda date: date.toordinal())
-    except:
-        df['date_ordinal'] = pd.to_datetime(df[df[pais]==seleccion_rep1][ejex],format='%Y/%m/%d').apply(lambda date: date.toordinal())
+    df = df.dropna(subset=[ejex])
+    df = df.dropna(subset=[ejey])
+    df3=df[df[pais]==seleccion_rep1].groupby([ejex], as_index=False).agg({ejey: "sum"})
 
-    x=np.asarray(df[df[pais]==seleccion_rep1]['date_ordinal']).reshape(-1,1)
-    y=df[df[pais]==seleccion_rep1][ejey]
+    try:
+        df3['date_ordinal'] = pd.to_datetime(df3[ejex],format='%d/%m/%Y').apply(lambda date: date.toordinal())
+    except:
+        df3['date_ordinal'] = pd.to_datetime(df3[ejex],format='%Y/%m/%d').apply(lambda date: date.toordinal())
+
+    x=np.asarray(df3['date_ordinal']).reshape(-1,1)
+    y=df3[ejey]
 
     plt.scatter(x,y)
 
@@ -730,7 +753,7 @@ def Reporte7():
     #plt.xlim(x_new_min,x_new_max)
     plt.ylim(np.min(y),np.max(y))
     title = 'Degree = {}; RMSE = {}; R2 = {}'.format(poly_degree, round(rmse,2), round(r2,2))
-    plt.title("Tendencia de la infección por Covid-19 en un País\n " + title, fontsize=10)
+    plt.title("Tendencia del número de infectados por día de un País\n " + title, fontsize=10)
     plt.xlabel('Fecha')
     plt.ylabel('Infectados')
 
@@ -781,14 +804,17 @@ def Reporte9():
     pais=request.args.get('pais',None)
     seleccion_rep1=request.args.get('seleccion_rep1',None)
     df=pd.DataFrame(contenido_archivo)
-    
+    df = df.dropna(subset=[ejex])
+    df = df.dropna(subset=[ejey])
+
+    df3=df[df[pais]==seleccion_rep1].groupby([ejex], as_index=False).agg({ejey: "sum"})
     try:
-        df['date_ordinal'] = pd.to_datetime(df[df[pais]==seleccion_rep1][ejex],format='%d/%m/%Y').apply(lambda date: date.toordinal())
+        df3['date_ordinal'] = pd.to_datetime(df3[ejex],format='%d/%m/%Y').apply(lambda date: date.toordinal())
     except:
-        df['date_ordinal'] = pd.to_datetime(df[df[pais]==seleccion_rep1][ejex],format='%Y/%m/%d').apply(lambda date: date.toordinal())
+        df3['date_ordinal'] = pd.to_datetime(df3[ejex],format='%Y/%m/%d').apply(lambda date: date.toordinal())
     
-    x=np.asarray(df[df[pais]==seleccion_rep1]['date_ordinal']).reshape(-1,1)
-    y=df[df[pais]==seleccion_rep1][ejey]
+    x=np.asarray(df3['date_ordinal']).reshape(-1,1)
+    y=df3[ejey]
 
     plt.scatter(x,y)
 
@@ -823,7 +849,7 @@ def Reporte9():
     #plt.xlim(x_new_min,x_new_max)
     plt.ylim(np.min(y),np.max(y))
     title = 'Degree = {}; RMSE = {}; R2 = {}'.format(poly_degree, round(rmse,2), round(r2,2))
-    plt.title("Tendencia de la infección por Covid-19 en un País\n " + title, fontsize=10)
+    plt.title("Tendencia de la vacunacion de en un Pais\n " + title, fontsize=10)
     plt.xlabel('Fecha')
     plt.ylabel('Infectados')
 
@@ -851,7 +877,7 @@ def Mandarmensaje9(descripcion):
     return render_template('IEEErep9.html', descripcion = descripcion)
 
 #______________________________________________Reporte 10______________________________________________________
-#----------------------------------Tendencia de la vacunación de en un País-----------------------------------
+#-------------------------------Ánalisis Comparativo de Vacunación entre 2 paises.----------------------------
 @app.route('/iniciorep10')
 def pagina28():
     return render_template('iniciorep10.html')
@@ -873,14 +899,17 @@ def Reporte10():
     pais=request.args.get('pais',None)
     seleccion_rep1=request.args.get('seleccion_rep1',None)
     df=pd.DataFrame(contenido_archivo)
-    
-    try:
-        df['date_ordinal'] = pd.to_datetime(df[df[pais]==seleccion_rep1][ejex],format='%d/%m/%Y').apply(lambda date: date.toordinal())
-    except:
-        df['date_ordinal'] = pd.to_datetime(df[df[pais]==seleccion_rep1][ejex],format='%Y/%m/%d').apply(lambda date: date.toordinal())
+    df = df.dropna(subset=[ejex])
+    df = df.dropna(subset=[ejey])
 
-    x=np.asarray(df[df[pais]==seleccion_rep1]['date_ordinal']).reshape(-1,1)
-    y=df[df[pais]==seleccion_rep1][ejey]
+    df3=df[df[pais]==seleccion_rep1].groupby([ejex], as_index=False).agg({ejey: "sum"})
+    try:
+        df3['date_ordinal'] = pd.to_datetime(df3[ejex],format='%d/%m/%Y').apply(lambda date: date.toordinal())
+    except:
+        df3['date_ordinal'] = pd.to_datetime(df3[ejex],format='%Y/%m/%d').apply(lambda date: date.toordinal())
+    
+    x=np.asarray(df3['date_ordinal']).reshape(-1,1)
+    y=df3[ejey]
     
     plt.scatter(x,y)
 
@@ -924,14 +953,18 @@ def Reporte10():
     plt.close()
 
     seleccion_rep2=request.args.get('seleccion_rep2',None)
-    print("Estoy en seleccion")
-    print(seleccion_rep2)
-    df=pd.DataFrame(contenido_archivo)
+    #print("Estoy en seleccion")
+    #print(seleccion_rep2)
+    #df=pd.DataFrame(contenido_archivo)
     
-    df['date_ordinal'] = pd.to_datetime(df[df[pais]==seleccion_rep2][ejex],format='%d/%m/%Y').apply(lambda date: date.toordinal())
-    x=np.asarray(df[df[pais]==seleccion_rep2]['date_ordinal']).reshape(-1,1)
-    y=df[df[pais]==seleccion_rep2][ejey]
+    df3=df[df[pais]==seleccion_rep2].groupby([ejex], as_index=False).agg({ejey: "sum"})
+    try:
+        df3['date_ordinal'] = pd.to_datetime(df3[ejex],format='%d/%m/%Y').apply(lambda date: date.toordinal())
+    except:
+        df3['date_ordinal'] = pd.to_datetime(df3[ejex],format='%Y/%m/%d').apply(lambda date: date.toordinal())
     
+    x=np.asarray(df3['date_ordinal']).reshape(-1,1)
+    y=df3[ejey]
 
     plt.scatter(x,y)
 
@@ -1010,6 +1043,9 @@ def Reporte11():
     seleccion_rep1=request.args.get('seleccion_rep1',None)
     df=pd.DataFrame(contenido_archivo)
     
+    df = df.dropna(subset=[ejex])
+    df = df.dropna(subset=[ejey])
+
     x=np.asarray(df[df[pais]==seleccion_rep1][ejex]).reshape(-1,1)
     y=df[df[pais]==seleccion_rep1][ejey]
 
@@ -1100,6 +1136,208 @@ def Reporte11():
 def Mandarmensaje11(descripcion):
     return render_template('IEEErep11.html', descripcion = descripcion)
 
+#______________________________________________Reporte 12______________________________________________________
+#--------------------------Ánalisis Comparativo entres 2 o más paises o continentes.--------------------------
+@app.route('/iniciorep12')
+def pagina70():
+    return render_template('iniciorep12.html')
+
+@app.route('/iniciorep12/regresionlineal12')
+def pagina71():
+    return render_template('analisis12.html', Encabezados = recorrertitulosExcel())
+
+@app.route('/iniciorep12/regresionlineal12/reporte12')
+def pagina72():
+    return render_template('IEEErep12.html')
+
+@app.route("/rep12")
+def Reporte12():
+    global nombre_archivito
+    contenido_archivo = pd.read_csv("Archivos/" + nombre_archivito)
+    ejex=request.args.get('ejex',None)
+    ejey=request.args.get('ejey',None)
+    pais=request.args.get('pais',None)
+    seleccion_rep1=request.args.get('seleccion_rep1',None)
+    df=pd.DataFrame(contenido_archivo)
+    df = df.dropna(subset=[ejex])
+    df = df.dropna(subset=[ejey])
+
+    df3=df[df[pais]==seleccion_rep1].groupby([ejex], as_index=False).agg({ejey: "sum"})
+    try:
+        df3['date_ordinal'] = pd.to_datetime(df3[ejex],format='%d/%m/%Y').apply(lambda date: date.toordinal())
+    except:
+        df3['date_ordinal'] = pd.to_datetime(df3[ejex],format='%Y/%m/%d').apply(lambda date: date.toordinal())
+    
+    x=np.asarray(df3['date_ordinal']).reshape(-1,1)
+    y=df3[ejey]
+    
+    plt.scatter(x,y)
+
+    # regression transform
+    poly_degree = 3
+    polynomial_features = PolynomialFeatures(degree = poly_degree)
+    x_transform = polynomial_features.fit_transform(x)
+
+    # fit the model
+    model = LinearRegression().fit(x_transform, y)
+    y_new = model.predict(x_transform)
+
+    # calculate rmse and r2
+    rmse = np.sqrt(mean_squared_error(y, y_new))
+    r2 = r2_score(y, y_new)
+    #print('RMSE: ', rmse)
+    #print('R2: ', r2)
+
+    # prediction
+    x_new_min = 0.0
+    x_new_max = 50.0
+
+    x_new = np.linspace(x_new_min, x_new_max, 50)
+    x_new = x_new[:,np.newaxis]
+
+    x_new_transform = polynomial_features.fit_transform(x_new)
+    y_new = model.predict(x_new_transform)
+
+    # plot the prediction
+    plt.plot(x, y, color='coral', linewidth=3)
+    plt.grid()
+    #plt.xlim(x_new_min,x_new_max)
+    plt.ylim(np.min(y),np.max(y))
+    title = 'Degree = {}; RMSE = {}; R2 = {}'.format(poly_degree, round(rmse,2), round(r2,2))
+    plt.title("Ánalisis Comparativo de Vacunaciópn entre 2 o mas paises para " + seleccion_rep1 + "\n" + title, fontsize=10)
+    plt.xlabel('Fecha')
+    plt.ylabel('Infectados')
+
+    plt.savefig("static/Reportes/rep12.png")
+
+    plt.close()
+
+    seleccion_rep2=request.args.get('seleccion_rep2',None)
+    #print("Estoy en seleccion")
+    #print(seleccion_rep2)
+    #df=pd.DataFrame(contenido_archivo)
+    
+    df3=df[df[pais]==seleccion_rep2].groupby([ejex], as_index=False).agg({ejey: "sum"})
+    try:
+        df3['date_ordinal'] = pd.to_datetime(df3[ejex],format='%d/%m/%Y').apply(lambda date: date.toordinal())
+    except:
+        df3['date_ordinal'] = pd.to_datetime(df3[ejex],format='%Y/%m/%d').apply(lambda date: date.toordinal())
+    
+    x=np.asarray(df3['date_ordinal']).reshape(-1,1)
+    y=df3[ejey]
+
+    plt.scatter(x,y)
+
+    # regression transform
+    poly_degree = 3
+    polynomial_features = PolynomialFeatures(degree = poly_degree)
+    x_transform = polynomial_features.fit_transform(x)
+
+    # fit the model
+    model = LinearRegression().fit(x_transform, y)
+    y_new = model.predict(x_transform)
+
+    # calculate rmse and r2
+    rmse = np.sqrt(mean_squared_error(y, y_new))
+    r2 = r2_score(y, y_new)
+    #print('RMSE: ', rmse)
+    #print('R2: ', r2)
+
+    # prediction
+    x_new_min = 0.0
+    x_new_max = 50.0
+
+    x_new = np.linspace(x_new_min, x_new_max, 50)
+    x_new = x_new[:,np.newaxis]
+
+    x_new_transform = polynomial_features.fit_transform(x_new)
+    y_new = model.predict(x_new_transform)
+
+    # plot the prediction
+    plt.plot(x, y, color='coral', linewidth=3)
+    plt.grid()
+    #plt.xlim(x_new_min,x_new_max)
+    plt.ylim(np.min(y),np.max(y))
+    title = 'Degree = {}; RMSE = {}; R2 = {}'.format(poly_degree, round(rmse,2), round(r2,2))
+    plt.title("Ánalisis Comparativo de Vacunaciópn entre 2 o mas paises " + seleccion_rep2 + "\n" + title, fontsize=10)
+    plt.xlabel('Fecha')
+    plt.ylabel('Infectados')
+
+    plt.savefig("static/Reportes/rep121.png")
+
+   #plt.close()
+    plt.close()
+
+    seleccion_rep3=request.args.get('seleccion_rep3',None)
+    #print("Estoy en seleccion")
+    #print(seleccion_rep2)
+    #df=pd.DataFrame(contenido_archivo)
+    
+    df3=df[df[pais]==seleccion_rep3].groupby([ejex], as_index=False).agg({ejey: "sum"})
+    try:
+        df3['date_ordinal'] = pd.to_datetime(df3[ejex],format='%d/%m/%Y').apply(lambda date: date.toordinal())
+    except:
+        df3['date_ordinal'] = pd.to_datetime(df3[ejex],format='%Y/%m/%d').apply(lambda date: date.toordinal())
+    
+    x=np.asarray(df3['date_ordinal']).reshape(-1,1)
+    y=df3[ejey]
+
+    plt.scatter(x,y)
+
+    # regression transform
+    poly_degree = 3
+    polynomial_features = PolynomialFeatures(degree = poly_degree)
+    x_transform = polynomial_features.fit_transform(x)
+
+    # fit the model
+    model = LinearRegression().fit(x_transform, y)
+    y_new = model.predict(x_transform)
+
+    # calculate rmse and r2
+    rmse = np.sqrt(mean_squared_error(y, y_new))
+    r2 = r2_score(y, y_new)
+    #print('RMSE: ', rmse)
+    #print('R2: ', r2)
+
+    # prediction
+    x_new_min = 0.0
+    x_new_max = 50.0
+
+    x_new = np.linspace(x_new_min, x_new_max, 50)
+    x_new = x_new[:,np.newaxis]
+
+    x_new_transform = polynomial_features.fit_transform(x_new)
+    y_new = model.predict(x_new_transform)
+
+    # plot the prediction
+    plt.plot(x, y, color='coral', linewidth=3)
+    plt.grid()
+    #plt.xlim(x_new_min,x_new_max)
+    plt.ylim(np.min(y),np.max(y))
+    title = 'Degree = {}; RMSE = {}; R2 = {}'.format(poly_degree, round(rmse,2), round(r2,2))
+    plt.title("Ánalisis Comparativo de Vacunaciópn entre 2 o mas paises " + seleccion_rep3 + "\n" + title, fontsize=10)
+    plt.xlabel('Fecha')
+    plt.ylabel('Infectados')
+
+    plt.savefig("static/Reportes/rep122.png")
+
+    plt.close()
+
+
+    descripcion = ""
+    descripcion = "Actualmente se esta viviendo una situacion a nivel mundial con la enfermedad de Covid-19, en lo cual todos los paises nos hemos vuelto muy suceptibles, por lo cual gracias a las herramientas actuales se puede decir que " + seleccion_rep1 + " " + seleccion_rep2 +" se ven afectados de manera directa. Por lo cual realizando un analisis de regresion polinomial de grado 3, nos podemos dar cuenta que se tiene un error cuadratico medio de " + str(round(rmse,2)) + " este error medio nos indica la cantidad de de error que tenemos entre los conjuntos de datos " + " de fechas e infecciones que se estan dando en el pais este datos nos ayuda para poder evaluar la tendencia entre dos valores, ahora bien nos podemos dar cuenta que el valor del coeficiente de determinación " + str(round(r2,2)) + " indica que el modelo indica que el modelo explica toda la variabilidad de los datos de respuesta en torno a su media, por lo cual nos podemos dar cuenta que los indices de vacunacion van subiendo ya que las personas estan tomando conciencia que se deben de vacunar, aunque aun falta bastante genente a la cual llegar con la vacuna"
+    
+
+    #descripcion = "Actualmente se esta viviendo una situacion a nivel mundial con la enfermedad de Covid-19, en lo cual todos los paises nos hemos vuelto muy suceptibles, por lo cual gracias a las herramientas actuales se puede decir que " + seleccion_rep1 + " se ve afectado de manera directa. Por lo cual realizando un analisis de regresion polinomial de grado 3, nos podemos dar cuenta que se tiene un error cuadratico medio de " + str(round(rmse,2)) + " este error medio nos indica la cantidad de de error que tenemos entre los conjuntos de datos " + " de fechas e infecciones que se estan dando en el pais este datos nos ayuda para poder evaluar la tendencia entre dos valores, ahora bien nos podemos dar cuenta que "
+    
+    return render_template("analisis12.html", Encabezados = recorrertitulosExcel(), descripcion = descripcion)
+
+@app.route("/mensajeenviado12/<descripcion>")
+def Mandarmensaje12(descripcion):
+    return render_template('IEEErep12.html', descripcion = descripcion)
+
+
+
 #______________________________________________Reporte 13______________________________________________________
 #----------------------Muertes promedio por casos confirmados y edad de covid 19 en un País--------------------																									------
 @app.route('/iniciorep13')
@@ -1125,13 +1363,16 @@ def Reporte13():
     seleccion_rep1=request.args.get('seleccion_rep1',None)
     seleccion_rep2=request.args.get('seleccion_rep2',None)
     
-
-
     df  = pd.DataFrame(contenido_archivo)
     df2 = df[df[pais]==int(seleccion_rep1)]
+    df2 = df2.dropna(subset=[ejex])
+    df2 = df2.dropna(subset=[ejey])
 
-    x=np.asarray(df2[df2[edad]==seleccion_rep2][ejex]).reshape(-1,1)
-    y=df2[df2[edad]==seleccion_rep2][ejey]
+    df3=df2.groupby([ejex], as_index=False).agg({ejey: "sum"})
+    
+    
+    x=np.asarray(df3[ejex]).reshape(-1,1)
+    y=df3[ejey]
 
     plt.scatter(x,y)
 
@@ -1221,9 +1462,8 @@ def Mandarmensaje13(descripcion):
     return render_template('IEEErep13.html', descripcion = descripcion)
 
 
-
 #______________________________________________Reporte 14______________________________________________________
-#----------------------------------Muertes según regiones de un país - Covid 19.-----------------------------------
+#-------------------------------Muertes según regiones de un país - Covid 19.----------------------------------
 @app.route('/iniciorep14')
 def pagina31():
     return render_template('iniciorep14.html')
@@ -1246,13 +1486,17 @@ def Reporte14():
     seleccion_rep1=request.args.get('seleccion_rep1',None)
     df=pd.DataFrame(contenido_archivo)
     
+    df = df.dropna(subset=[ejex])
+    df = df.dropna(subset=[ejey])
+
+    df3=df[df[pais]==seleccion_rep1].groupby([ejex], as_index=False).agg({ejey: "sum"})
     try:
-        df['date_ordinal'] = pd.to_datetime(df[df[pais]==seleccion_rep1][ejex],format='%d/%m/%Y').apply(lambda date: date.toordinal())
+        df3['date_ordinal'] = pd.to_datetime(df3[ejex],format='%d/%m/%Y').apply(lambda date: date.toordinal())
     except:
-        df['date_ordinal'] = pd.to_datetime(df[df[pais]==seleccion_rep1][ejex],format='%Y/%m/%d').apply(lambda date: date.toordinal())
+        df3['date_ordinal'] = pd.to_datetime(df3[ejex],format='%Y/%m/%d').apply(lambda date: date.toordinal())
     
-    x=np.asarray(df[df[pais]==seleccion_rep1]['date_ordinal']).reshape(-1,1)
-    y=df[df[pais]==seleccion_rep1][ejey]
+    x=np.asarray(df3['date_ordinal']).reshape(-1,1)
+    y=df3[ejey]
 
     plt.scatter(x,y)
 
@@ -1339,14 +1583,18 @@ def Reporte15():
     pais=request.args.get('pais',None)
     seleccion_rep1=request.args.get('seleccion_rep1',None)
     df=pd.DataFrame(contenido_archivo)
-    
-    try:
-        df['date_ordinal'] = pd.to_datetime(df[df[pais]==seleccion_rep1][ejex],format='%d/%m/%Y').apply(lambda date: date.toordinal())
-    except:
-        df['date_ordinal'] = pd.to_datetime(df[df[pais]==seleccion_rep1][ejex],format='%Y/%m/%d').apply(lambda date: date.toordinal())
+    df = df.dropna(subset=[ejex])
+    df = df.dropna(subset=[ejey])
 
-    x=np.asarray(df[df[pais]==seleccion_rep1]['date_ordinal']).reshape(-1,1)
-    y=df[df[pais]==seleccion_rep1][ejey]
+    df3=df[df[pais]==seleccion_rep1].groupby([ejex], as_index=False).agg({ejey: "sum"})
+    try:
+        df3['date_ordinal'] = pd.to_datetime(df3[ejex],format='%d/%m/%Y').apply(lambda date: date.toordinal())
+    except:
+        df3['date_ordinal'] = pd.to_datetime(df3[ejex],format='%Y/%m/%d').apply(lambda date: date.toordinal())
+    
+    x=np.asarray(df3['date_ordinal']).reshape(-1,1)
+    y=df3[ejey]
+
 
     plt.scatter(x,y)
 
@@ -1432,8 +1680,13 @@ def Reporte16():
     seleccion_rep1=request.args.get('seleccion_rep1',None)
     df=pd.DataFrame(contenido_archivo)
     
-    x=np.asarray(df[df[pais]==seleccion_rep1][ejex]).reshape(-1,1)
-    y=df[df[pais]==seleccion_rep1][ejey]
+    df = df.dropna(subset=[ejex])
+    df = df.dropna(subset=[ejey])
+
+    df3=df[df[pais]==seleccion_rep1].groupby([ejex], as_index=False).agg({ejey: "sum"})
+
+    x=np.asarray(df3[ejex]).reshape(-1,1)
+    y=df3[ejey]
 
     plt.scatter(x,y)
 
@@ -1546,8 +1799,13 @@ def Reporte17():
     seleccion_rep1=request.args.get('seleccion_rep1',None)
     df=pd.DataFrame(contenido_archivo)
     
-    x=np.asarray(df[df[pais]==seleccion_rep1][ejex]).reshape(-1,1)
-    y=df[df[pais]==seleccion_rep1][ejey]
+    df = df.dropna(subset=[ejex])
+    df = df.dropna(subset=[ejey])
+
+    df3=df[df[pais]==seleccion_rep1].groupby([ejex], as_index=False).agg({ejey: "sum"})
+
+    x=np.asarray(df3[ejex]).reshape(-1,1)
+    y=df3[ejey]
 
     plt.scatter(x,y)
 
@@ -1656,16 +1914,18 @@ def Reporte19():
     #print("estoy en fechita")
     #print(fechita)
 
+    df = df.dropna(subset=[ejex])
+    df = df.dropna(subset=[ejey])
+
+    df3=df[df[pais]==seleccion_rep1].groupby([ejex], as_index=False).agg({ejey: "sum"})
     try:
-        df['date_ordinal'] = pd.to_datetime(df[df[pais]==seleccion_rep1][ejex],format='%d/%m/%Y').apply(lambda date: date.toordinal())
+        df3['date_ordinal'] = pd.to_datetime(df3[ejex],format='%d/%m/%Y').apply(lambda date: date.toordinal())
     except:
-        df['date_ordinal'] = pd.to_datetime(df[df[pais]==seleccion_rep1][ejex],format='%Y/%m/%d').apply(lambda date: date.toordinal())
-
-
-    #predi = datetime.date(str(predi)).toordinal()
+        df3['date_ordinal'] = pd.to_datetime(df3[ejex],format='%Y/%m/%d').apply(lambda date: date.toordinal())
     
-    x=np.asarray(df[df[pais]==seleccion_rep1]['date_ordinal']).reshape(-1,1)
-    y=df[df[pais]==seleccion_rep1][ejey]
+    x=np.asarray(df3['date_ordinal']).reshape(-1,1)
+    y=df3[ejey]
+
 
     plt.scatter(x,y)
 
@@ -1754,13 +2014,18 @@ def Reporte20():
     #seleccion_rep1=request.args.get('seleccion_rep1',None)
     df=pd.DataFrame(contenido_archivo)
     
-    try:
-        df['date_ordinal'] = pd.to_datetime(df[ejex],format='%d/%m/%Y').apply(lambda date: date.toordinal())
-    except:
-        df['date_ordinal'] = pd.to_datetime(df[ejex],format='%Y/%m/%d').apply(lambda date: date.toordinal())
+    df = df.dropna(subset=[ejex])
+    df = df.dropna(subset=[ejey])
 
-    x=np.asarray(df['date_ordinal']).reshape(-1,1)
-    y=df[ejey]
+    df3=df.groupby([ejex], as_index=False).agg({ejey: "sum"})
+    try:
+        df3['date_ordinal'] = pd.to_datetime(df3[ejex],format='%d/%m/%Y').apply(lambda date: date.toordinal())
+    except:
+        df3['date_ordinal'] = pd.to_datetime(df3[ejex],format='%Y/%m/%d').apply(lambda date: date.toordinal())
+    
+    x=np.asarray(df3['date_ordinal']).reshape(-1,1)
+    y=df3[ejey]
+
     
     plt.scatter(x,y)
 
@@ -1809,9 +2074,25 @@ def Reporte20():
     #print(seleccion_rep2)
     df=pd.DataFrame(contenido_archivo)
     
-    df['date_ordinal'] = pd.to_datetime(df[ejex],format='%d/%m/%Y').apply(lambda date: date.toordinal())
-    x=np.asarray(df['date_ordinal']).reshape(-1,1)
-    y=df[ejey2]
+    df = df.dropna(subset=[ejex])
+    df = df.dropna(subset=[ejey2])
+
+    df3=df.groupby([ejex], as_index=False).agg({ejey2: "sum"})
+    try:
+        df3['date_ordinal'] = pd.to_datetime(df3[ejex],format='%d/%m/%Y').apply(lambda date: date.toordinal())
+    except:
+        df3['date_ordinal'] = pd.to_datetime(df3[ejex],format='%Y/%m/%d').apply(lambda date: date.toordinal())
+    
+    x=np.asarray(df3['date_ordinal']).reshape(-1,1)
+    y=df3[ejey2]
+
+
+
+
+
+
+
+
 
     plt.scatter(x,y)
 
@@ -1894,13 +2175,18 @@ def Reporte21():
     fecha_dt = datetime.strptime(predi, '%d/%m/%Y')
     fecha_reci = fecha_dt.toordinal()
 
-    try:
-        df['date_ordinal'] = pd.to_datetime(df[ejex],format='%d/%m/%Y').apply(lambda date: date.toordinal())
-    except:
-        df['date_ordinal'] = pd.to_datetime(df[ejex],format='%Y/%m/%d').apply(lambda date: date.toordinal())
+    df = df.dropna(subset=[ejex])
+    df = df.dropna(subset=[ejey])
 
-    x=np.asarray(df['date_ordinal']).reshape(-1,1)
-    y=df[ejey]
+    df3=df.groupby([ejex], as_index=False).agg({ejey: "sum"})
+    try:
+        df3['date_ordinal'] = pd.to_datetime(df3[ejex],format='%d/%m/%Y').apply(lambda date: date.toordinal())
+    except:
+        df3['date_ordinal'] = pd.to_datetime(df3[ejex],format='%Y/%m/%d').apply(lambda date: date.toordinal())
+    
+    x=np.asarray(df3['date_ordinal']).reshape(-1,1)
+    y=df3[ejey]
+
     
     plt.scatter(x,y)
 
@@ -1954,9 +2240,18 @@ def Reporte21():
     fecha_dt2 = datetime.strptime(predi2, '%d/%m/%Y')
     fecha_reci2 = fecha_dt2.toordinal()
 
-    df['date_ordinal'] = pd.to_datetime(df[ejex],format='%d/%m/%Y').apply(lambda date: date.toordinal())
-    x=np.asarray(df['date_ordinal']).reshape(-1,1)
-    y=df[ejey2]
+    df = df.dropna(subset=[ejex])
+    df = df.dropna(subset=[ejey2])
+
+    df3=df.groupby([ejex], as_index=False).agg({ejey2: "sum"})
+    try:
+        df3['date_ordinal'] = pd.to_datetime(df3[ejex],format='%d/%m/%Y').apply(lambda date: date.toordinal())
+    except:
+        df3['date_ordinal'] = pd.to_datetime(df3[ejex],format='%Y/%m/%d').apply(lambda date: date.toordinal())
+    
+    x=np.asarray(df3['date_ordinal']).reshape(-1,1)
+    y=df3[ejey2]
+
 
     plt.scatter(x,y)
 
@@ -2036,13 +2331,18 @@ def Reporte22():
     seleccion_rep1=request.args.get('seleccion_rep1',None)
     df=pd.DataFrame(contenido_archivo)
     
+    df = df.dropna(subset=[ejex])
+    df = df.dropna(subset=[ejey])
+
+    df3=df[df[pais]==seleccion_rep1].groupby([ejex], as_index=False).agg({ejey: "sum"})
     try:
-        df['date_ordinal'] = pd.to_datetime(df[df[pais]==seleccion_rep1][ejex],format='%d/%m/%Y').apply(lambda date: date.toordinal())
+        df3['date_ordinal'] = pd.to_datetime(df3[ejex],format='%d/%m/%Y').apply(lambda date: date.toordinal())
     except:
-        df['date_ordinal'] = pd.to_datetime(df[df[pais]==seleccion_rep1][ejex],format='%Y/%m/%d').apply(lambda date: date.toordinal())
+        df3['date_ordinal'] = pd.to_datetime(df3[ejex],format='%Y/%m/%d').apply(lambda date: date.toordinal())
     
-    x=np.asarray(df[df[pais]==seleccion_rep1]['date_ordinal']).reshape(-1,1)
-    y=df[df[pais]==seleccion_rep1][ejey]
+    x=np.asarray(df3['date_ordinal']).reshape(-1,1)
+    y=df3[ejey]
+
 
     plt.scatter(x,y)
 
@@ -2129,10 +2429,12 @@ def Reporte23():
     seleccion_rep1=request.args.get('seleccion_rep1',None)
     
     df  = pd.DataFrame(contenido_archivo)
-    df3=df[df[pais]==seleccion_rep1].groupby([ejex], as_index=False).agg({ejey: "sum"})
-    #le = preprocessing.LabelEncoder()
+    df = df.dropna(subset=[ejex])
+    df = df.dropna(subset=[ejey])
 
-    x=np.asarray(df3[ejex].index.tolist()).reshape(-1,1)
+    df3=df[df[pais]==seleccion_rep1].groupby([ejex], as_index=False).agg({ejey: "sum"})
+
+    x=np.asarray(df3[ejex]).reshape(-1,1)
     y=df3[ejey]
 
     #print("Probando que lleva outlook_encoded")
@@ -2235,8 +2537,6 @@ def Mandarmensaje23(descripcion):
 
 
 
-
-
 #______________________________________________Reporte 24______________________________________________________
 #--------------Comparación entre el número de casos detectados y el número de pruebas de un país.--------------
 @app.route('/iniciorep24')
@@ -2261,13 +2561,18 @@ def Reporte24():
     seleccion_rep1=request.args.get('seleccion_rep1',None)
     df=pd.DataFrame(contenido_archivo)
     
-    try:
-        df['date_ordinal'] = pd.to_datetime(df[df[pais]==seleccion_rep1][ejex],format='%d/%m/%Y').apply(lambda date: date.toordinal())
-    except:
-        df['date_ordinal'] = pd.to_datetime(df[df[pais]==seleccion_rep1][ejex],format='%Y/%m/%d').apply(lambda date: date.toordinal())
+    df = df.dropna(subset=[ejex])
+    df = df.dropna(subset=[ejey])
 
-    x=np.asarray(df[df[pais]==seleccion_rep1]['date_ordinal']).reshape(-1,1)
-    y=df[df[pais]==seleccion_rep1][ejey]
+    df3=df[df[pais]==seleccion_rep1].groupby([ejex], as_index=False).agg({ejey: "sum"})
+    try:
+        df3['date_ordinal'] = pd.to_datetime(df3[ejex],format='%d/%m/%Y').apply(lambda date: date.toordinal())
+    except:
+        df3['date_ordinal'] = pd.to_datetime(df3[ejex],format='%Y/%m/%d').apply(lambda date: date.toordinal())
+    
+    x=np.asarray(df3['date_ordinal']).reshape(-1,1)
+    y=df3[ejey]
+
     
     plt.scatter(x,y)
 
@@ -2312,10 +2617,18 @@ def Reporte24():
 
     #seleccion_rep2=request.args.get('seleccion_rep2',None)
     ejey2=request.args.get('ejey2',None)
+    df = df.dropna(subset=[ejey2])
+
+    df3=df[df[pais]==seleccion_rep1].groupby([ejex], as_index=False).agg({ejey2: "sum"})
+    try:
+        df3['date_ordinal'] = pd.to_datetime(df3[ejex],format='%d/%m/%Y').apply(lambda date: date.toordinal())
+    except:
+        df3['date_ordinal'] = pd.to_datetime(df3[ejex],format='%Y/%m/%d').apply(lambda date: date.toordinal())
+    
+    x=np.asarray(df3['date_ordinal']).reshape(-1,1)
+    y=df3[ejey2]
     #print("Estoy en seleccion")
     #print(seleccion_rep2)
-    df=pd.DataFrame(contenido_archivo)
-    y=df[df[pais]==seleccion_rep1][ejey2]
     #y=df[ejey2]
     
 
@@ -2409,16 +2722,18 @@ def Reporte25():
     #print("estoy en fechita")
     #print(fechita)
 
+    df = df.dropna(subset=[ejex])
+    df = df.dropna(subset=[ejey])
+
+    df3=df[df[pais]==seleccion_rep1].groupby([ejex], as_index=False).agg({ejey: "sum"})
     try:
-        df['date_ordinal'] = pd.to_datetime(df[df[pais]==seleccion_rep1][ejex],format='%d/%m/%Y').apply(lambda date: date.toordinal())
+        df3['date_ordinal'] = pd.to_datetime(df3[ejex],format='%d/%m/%Y').apply(lambda date: date.toordinal())
     except:
-        df['date_ordinal'] = pd.to_datetime(df[df[pais]==seleccion_rep1][ejex],format='%Y/%m/%d').apply(lambda date: date.toordinal())
-
-
-    #predi = datetime.date(str(predi)).toordinal()
+        df3['date_ordinal'] = pd.to_datetime(df3[ejex],format='%Y/%m/%d').apply(lambda date: date.toordinal())
     
-    x=np.asarray(df[df[pais]==seleccion_rep1]['date_ordinal']).reshape(-1,1)
-    y=df[df[pais]==seleccion_rep1][ejey]
+    x=np.asarray(df3['date_ordinal']).reshape(-1,1)
+    y=df3[ejey]
+
 
     plt.scatter(x,y)
 
