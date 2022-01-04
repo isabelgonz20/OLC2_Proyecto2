@@ -621,12 +621,15 @@ graficar_ts			RGRAFICARTS
 
 # Metodos principales
 * Uploader: Metodo que se encarga de obtener la ruta del archivo. 
+
 ![image](IMAGENES/A15.png)
 
 * Recorrer CSV: Metodo que se encarga de recorrer todos los titulos de nuestro csv
+
 ![image](IMAGENES/A16.png)
 
 * App: Metodo principal que ejecuta toda la aplicacion 
+
 ![image](IMAGENES/A17.png)
 
 
@@ -640,30 +643,42 @@ graficar_ts			RGRAFICARTS
 ![image](IMAGENES/A2.png)
 
 3. Opciones de analisis: Nos muestra un listado con todas las opciones de informe con las que contamos.
+
 * ![image](IMAGENES/A3.png)
+
 * ![image](IMAGENES/A4.png)
+
 * ![image](IMAGENES/A5.png)
+
 * ![image](IMAGENES/A6.png)
+
 * ![image](IMAGENES/A7.png)
+
 * ![image](IMAGENES/A8.png)
 
 4. Manuales: Ventana que nos muestra un boton del manual de usuario y tecnico.
+
 * ![image](IMAGENES/A9.png)
 
 5. Ventana que nos muestra el titulo y la opcion de ingresar o regresar al inform
+
 * ![image](IMAGENES/A10.png)
 
 6. Ventana que nos pedira los datos requeridos para realizar el analisis correspondiente
+
 * ![image](IMAGENES/A11.png)
 
 7. Ventana que nos muestra los botones que nos permitiran realizar el analisis o enviarnos a descargar nuestro reporte del analisis correctapondiente.
+
 * ![image](IMAGENES/A12.png)
 
 8. Ventana que nos muestra el reporte en formato IEEE del analisis que hemos realizo, el cual se podra descargar en formato .pdf.
 * ![image](IMAGENES/A13.png)
 
 9. Ventana que nos muestra los botones que nos redirigen a los distintos manuales que se tienen.
+
 * ![image](IMAGENES/A9.png)
+
 * [Manual tecnico](https://github.com/isabelgonz20/OLC2_Proyecto2/blob/master/Proyecto/Manuales/Tecnico.md): Manual tecnico
 * [Manual Usuario](https://github.com/isabelgonz20/OLC2_Proyecto2/blob/master/Proyecto/Manuales/Usuario.md): Manual Usuario
 
